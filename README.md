@@ -15,7 +15,7 @@
 npm install
 ```
 
-### 2) Eejcutar el proyecto
+### 2) Ejecutar el proyecto
 ```
 npm run dev
 ```

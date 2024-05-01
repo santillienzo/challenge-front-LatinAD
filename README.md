@@ -2,13 +2,6 @@
 
 ## Descripción
 
-## Tecnologías y lenguajes utilizados
- * React + Vite
- * Typescript
-
-## Dependencias/librerías utilizadas
-  * [Material UI](https://mui.com/) - Librería de componentes
-
 ## Ejecución
 ### 1) Instalar las dependencias
 ```
@@ -19,3 +12,10 @@ npm install
 ```
 npm run dev
 ```
+
+## Tecnologías y lenguajes utilizados
+ * React + Vite
+ * Typescript
+
+## Dependencias/librerías utilizadas
+  * [Material UI](https://mui.com/) - Librería de componentes

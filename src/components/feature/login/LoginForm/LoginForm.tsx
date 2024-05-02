@@ -1,7 +1,9 @@
+import style from './LoginForm.module.css'
 import { Button, Paper, TextField, Typography } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login';
 import logo from '@assets/logo.svg'
-import style from './LoginForm.module.css'
+
+//Login form container component
 const LoginForm = () => {
   return (
     <Paper className={style.loginFormContainer}>

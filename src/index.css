@@ -1,4 +1,8 @@
-/* LIGHT BLUE: #0096F5 */
+:root{
+    --background: #ffffff;
+    --principal-color: #0096F5;
+    --secondary-color: #163B78;
+}
 
 *{
     margin: 0;

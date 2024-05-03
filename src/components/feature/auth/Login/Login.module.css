@@ -1,0 +1,10 @@
+.loginFormContainer{
+    width: 300px;
+    padding: 18px;
+}
+
+.loginTitle{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

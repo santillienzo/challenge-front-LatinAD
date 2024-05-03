@@ -19,6 +19,10 @@ export default defineConfig({
         find: '@hooks',
         replacement: path.resolve(__dirname,"./src/hooks")
       },
+      { 
+        find: '@contexts',
+        replacement: path.resolve(__dirname,"./src/contexts")
+      },
     ]
   }
 })

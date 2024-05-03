@@ -19,6 +19,7 @@ const Login = () => {
                     <LoginIcon fontSize='small'/>
                     Accede a tu cuenta
                 </Typography>
+                {/* Renderizamos el formulario */}
                 <LoginForm/>
         </Paper>
     )

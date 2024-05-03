@@ -6,6 +6,8 @@ type Errors = {
   [k:string]: string
 }
 
+//CUSTOM HOOK
+
 const useLoginForm = () => {
   //Declaramos el state que almacenará los valores del formulario
   const [values, setValues] = useState({

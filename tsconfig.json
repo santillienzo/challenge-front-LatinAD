@@ -6,6 +6,7 @@
       "@assets/*":["./assets/*"],
       "@hooks/*":["./hooks/*"],
       "@contexts/*":["./contexts/*"],
+      "@services/*":["./services/*"],
     },
     "target": "ES2020",
     "useDefineForClassFields": true,

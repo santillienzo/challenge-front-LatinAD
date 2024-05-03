@@ -12,6 +12,7 @@ import '@fontsource/roboto/700.css';
 import App from './App';
 import LoginView from '@components/views/LoginView/LoginView';
 import PrivateRoute from '@components/feature/auth/PrivateRoute/PrivateRoute';
+import AuthProvider from '@contexts/authContext';
 
 /*
   Definimos un router con el objeto createBrowserRouter de react-router-dom. 
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
   </React.StrictMode>,
 )

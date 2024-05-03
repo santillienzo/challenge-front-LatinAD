@@ -1,4 +1,6 @@
 import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useAuth } from "./useAuth";
+import { useNavigate } from "react-router-dom";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -9,6 +11,9 @@ type Errors = {
 //CUSTOM HOOK
 
 const useLoginForm = () => {
+  //Utilizamos login de nuestro useAuth
+  const {login} = useAuth()
+  const navigation = useNavigate()
   //Declaramos el state que almacenará los valores del formulario
   const [values, setValues] = useState({
     email: "",
@@ -27,7 +32,9 @@ const useLoginForm = () => {
     const fieldsEmpty = values.email == '' || values.password == ''
 
     if (!hasErrors && !fieldsEmpty) {
-      console.log("Enviado")
+      login(values, ()=>{
+        navigation('/')
+      })
     }
   };
 

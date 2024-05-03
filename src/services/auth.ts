@@ -1,6 +1,6 @@
-import { AuthBody, AuthUser } from "types/user"
+import { AuthBody, User } from "types/user"
 
-const login = async (body:AuthBody): Promise<AuthUser>=>{
+const login = async (body:AuthBody): Promise<User>=>{
     const res = await fetch("https://challenge-front-7fw1.onrender.com/login", {
         method: 'POST',
         headers: {
@@ -11,11 +11,10 @@ const login = async (body:AuthBody): Promise<AuthUser>=>{
 
     if (!res.ok) {
         //Manejo de erroes
-        console.log(res)
         throw new Error(res.statusText);
     }
 
-    const data:AuthUser = await res.json()
+    const data:User = await res.json()
 
     return data
 }

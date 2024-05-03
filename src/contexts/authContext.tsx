@@ -1,7 +1,22 @@
 import { ReactNode, createContext, useState } from "react";
 import { authService } from "@services/auth";
 import { AuthBody, User } from "../types/user";
-export const AuthContext = createContext({});
+
+// Definimos los tipos para los datos manejados en el contexto
+interface AuthContextType {
+  token: string;
+  user: User | null;
+  login: (body: AuthBody, callback?: () => void) => Promise<void>;
+  logOut: (callback?: () => void) => void;
+}
+
+// Creamos el contexto de autenticación y lo inicializamos con un objeto vacío
+export const AuthContext = createContext<AuthContextType>({
+  token: "",
+  user: null,
+  login: async () => {},
+  logOut: () => {},
+});
 
 type Props = {
   children: ReactNode;
@@ -13,6 +28,8 @@ const AuthProvider = ({ children }:Props) => {
   //State donde se almacena el token
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
+
+
   //Función encargada de iniciar sesión
   const login = async (body:AuthBody, callback?: ()=> void) => {
     try {
@@ -21,10 +38,7 @@ const AuthProvider = ({ children }:Props) => {
       //Si existe el token:
       if (res.token) {
         //Se guardan los datos del usuario
-        setUser({
-          email: res.email,
-          name: res.name,
-        });
+        setUser(res);
         //Se guarda el token en el state y en el local storage
         setToken(res.token);
         localStorage.setItem("token", res.token);

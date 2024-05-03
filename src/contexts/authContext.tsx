@@ -8,6 +8,7 @@ interface AuthContextType {
   user: User | null;
   login: (body: AuthBody, callback?: () => void) => Promise<void>;
   logOut: (callback?: () => void) => void;
+  error: string | null
 }
 
 // Creamos el contexto de autenticación y lo inicializamos con un objeto vacío
@@ -16,6 +17,7 @@ export const AuthContext = createContext<AuthContextType>({
   user: null,
   login: async () => {},
   logOut: () => {},
+  error: null
 });
 
 type Props = {
@@ -27,8 +29,8 @@ const AuthProvider = ({ children }:Props) => {
   const [user, setUser] = useState<User | null>(null);
   //State donde se almacena el token
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-
-
+  //State donde se almacenará el error en caso de haber uno
+  const [error, setError] = useState<string | null>(null)
 
   //Función encargada de iniciar sesión
   const login = async (body:AuthBody, callback?: ()=> void) => {
@@ -46,8 +48,8 @@ const AuthProvider = ({ children }:Props) => {
 
       //Si existe el callback se ejecutará
       callback && callback()
-    } catch (err) {
-      console.error(err);
+    } catch (err:any) {
+      setError(err.message)
     } 
   };
 
@@ -61,7 +63,7 @@ const AuthProvider = ({ children }:Props) => {
     callback && callback()
   };
 
-  return <AuthContext.Provider value={{ token, user, login, logOut }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token, user, login, logOut, error }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

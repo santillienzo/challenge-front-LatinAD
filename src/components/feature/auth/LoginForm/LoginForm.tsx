@@ -1,13 +1,16 @@
-import { Button, TextField } from '@mui/material'
+import { Alert, Button, TextField } from '@mui/material'
 import style from './LoginForm.module.css'
 import useLoginForm from '@hooks/useLoginForm';
+import LoadingBackdrop from '@components/common/LoadingBackdrop/LoadingBackdrop';
 
 const LoginForm = () => {
-  const {values, errors, onChange, onSubmit} = useLoginForm()
+  const {values, inputErrors, error, onChange, onSubmit, loading} = useLoginForm()
   
-
   return (
     <form className={style.loginFormInputsContainer} onSubmit={onSubmit}>
+        {
+          error && <Alert severity='error' className={style.error}>{error}</Alert>
+        }
         <TextField 
             fullWidth
             label="Email"
@@ -16,8 +19,8 @@ const LoginForm = () => {
             name='email'
             value={values.email}
             onChange={onChange}
-            error={Boolean(errors.email)}
-            helperText={errors.email}
+            error={Boolean(inputErrors.email)}
+            helperText={inputErrors.email}
         />
         <TextField 
             fullWidth
@@ -31,6 +34,7 @@ const LoginForm = () => {
         <div className={style.buttonFormContainer}>
             <Button variant='contained' type='submit'>Iniciar sesión</Button>
         </div>
+        <LoadingBackdrop open={loading}/>
     </form>
   )
 }

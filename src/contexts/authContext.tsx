@@ -8,7 +8,8 @@ interface AuthContextType {
   user: User | null;
   login: (body: AuthBody, callback?: () => void) => Promise<void>;
   logOut: (callback?: () => void) => void;
-  error: string | null
+  error: string | null,
+  loading: boolean
 }
 
 // Creamos el contexto de autenticación y lo inicializamos con un objeto vacío
@@ -17,7 +18,8 @@ export const AuthContext = createContext<AuthContextType>({
   user: null,
   login: async () => {},
   logOut: () => {},
-  error: null
+  error: null,
+  loading: false,
 });
 
 type Props = {
@@ -31,9 +33,11 @@ const AuthProvider = ({ children }:Props) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   //State donde se almacenará el error en caso de haber uno
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
 
   //Función encargada de iniciar sesión
   const login = async (body:AuthBody, callback?: ()=> void) => {
+    setLoading(true)
     try {
       const res = await authService.login(body)
       
@@ -50,7 +54,9 @@ const AuthProvider = ({ children }:Props) => {
       callback && callback()
     } catch (err:any) {
       setError(err.message)
-    } 
+    } finally{
+      setLoading(false)
+    }
   };
 
   //Función encargada de cerrar sesión
@@ -63,7 +69,7 @@ const AuthProvider = ({ children }:Props) => {
     callback && callback()
   };
 
-  return <AuthContext.Provider value={{ token, user, login, logOut, error }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token, user, login, logOut, error, loading }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

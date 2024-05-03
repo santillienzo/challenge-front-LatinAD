@@ -12,7 +12,7 @@ type Errors = {
 
 const useLoginForm = () => {
   //Utilizamos login de nuestro useAuth
-  const {login} = useAuth()
+  const {login, error, loading} = useAuth()
   const navigation = useNavigate()
   //Declaramos el state que almacenará los valores del formulario
   const [values, setValues] = useState({
@@ -20,18 +20,19 @@ const useLoginForm = () => {
     password: "",
   });
   //Declaramos el state que almacenará los errores que tengamos en el form
-  const [errors, setErrors] = useState<Errors>({}) 
+  const [inputErrors, setInputErrors] = useState<Errors>({})
   const isFirstInput = useRef(true)
 
   //Función para enviar el formulario
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Validamos que no hayan errores
-    const hasErrors = Object.keys(errors).length > 0
+    const hasErrors = Object.keys(inputErrors).length > 0
     //Validamos que los inputs no estén vacios
     const fieldsEmpty = values.email == '' || values.password == ''
 
     if (!hasErrors && !fieldsEmpty) {
+      //Ejecutamos el submit
       login(values, ()=>{
         navigation('/')
       })
@@ -69,18 +70,18 @@ const useLoginForm = () => {
     }
     
     if (emailIsEmpty) {
-      setErrors((prev) => ({
+      setInputErrors((prev) => ({
         ...prev,
         email: "El email es obligatorio"
       }))
     } else if (emailIsInvalid) {
-      setErrors((prev) => ({
+      setInputErrors((prev) => ({
         ...prev,
         email: "No es un email válido"
       }))
     } else{
       //Si no hay errores eliminamos el error del email
-      setErrors((prev) => {
+      setInputErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors.email;
         return newErrors;
@@ -94,7 +95,7 @@ const useLoginForm = () => {
     validateFields();
   }, [values.email, validateFields]);
 
-  return {values, onChange, onSubmit, errors}
+  return {values, onChange, onSubmit, inputErrors, error, loading}
 }
 
 export default useLoginForm

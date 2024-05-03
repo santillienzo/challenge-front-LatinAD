@@ -1,4 +1,4 @@
-import LoginForm from '@components/feature/login/LoginForm/LoginForm'
+import LoginForm from '@components/feature/auth/LoginForm/LoginForm'
 import style from './LoginView.module.css'
 
 const LoginView = () => {

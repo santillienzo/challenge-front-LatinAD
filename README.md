@@ -3,7 +3,7 @@
 ## Descripción
 
 ## Ejecución
-### 3) Crear un archivo .env con el siguiente contenido: 
+### 1) Crear un archivo .env con el siguiente contenido: 
 ```
 VITE_URI=https://challenge-front-7fw1.onrender.com
 ```

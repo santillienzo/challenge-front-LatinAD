@@ -1,22 +1,17 @@
-type ScreenType = 'outdoor' | 'indoor'
-
-interface Params {
-    pageSize: number,
-    offset: number,
-    name: string,
-    type: ScreenType
-}
+import {QueryParams, ScreenListResponse} from '../types/screen'
 
 interface Options {
-    params: Params,
+    params: QueryParams,
     token?: string
 }
 
-const listAll = async ({params, token}:Options)=>{
+const fetchScreens = async ({params, token}:Options): Promise<ScreenListResponse>=>{
     //Nuevo objeto URL que nos permite manejar la url como un objeto
     const url = new URL("https://challenge-front-7fw1.onrender.com/display")
     //Agregamois los params provenientes de los argumentos de la función a url
-    Object.keys(params).forEach(([key, value]) => url.searchParams.append(key, value));
+    Object.entries(params).forEach(([key, value]) => {
+        return url.searchParams.append(key, value)
+    });
 
     const res = await fetch(url,{
         headers: {
@@ -35,8 +30,13 @@ const listAll = async ({params, token}:Options)=>{
             throw new Error('Hubo un error. Intentalo de nuevo más tarde.');
         }
     }
+
+    const data:ScreenListResponse = await res.json()
+
+    return data
 }
 
+//Export service
 export const screenService = {
-    listAll
+    fetchScreens
 }

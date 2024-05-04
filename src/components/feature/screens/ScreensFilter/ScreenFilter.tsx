@@ -9,10 +9,11 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { QueryParams, ScreenType } from 'types/screen';
 
 type Props = {
-    onSubmit: (values: QueryParams)=>void
+    onSubmit: (values: QueryParams)=>void,
+    pageSize?:number
 }
 
-const ScreenFilter = ({onSubmit}:Props) => {
+const ScreenFilter = ({pageSize = 10,onSubmit}:Props) => {
     //State que almacena el estado de apertura del filtro
     const [filterOpen, setFilterOpen] = useState<boolean>(false)
     //Almacenamos los valores del formulario
@@ -60,7 +61,7 @@ const ScreenFilter = ({onSubmit}:Props) => {
         setWarning(null)
         
         const queryValues:QueryParams = {
-            pageSize: 10,
+            pageSize,
             offset: 0,
             name: filterValues.name,
             type

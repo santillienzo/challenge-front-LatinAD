@@ -64,7 +64,10 @@ const ScreensControl = () => {
     return (
         <div className={styles.screensControlContainer}>
             {/* ADD FILTER */}
-            <ScreenFilter onSubmit={handleFilterSubmit}/>
+            <ScreenFilter 
+                pageSize={pageSize}
+                onSubmit={handleFilterSubmit}
+            />
             <Pagination {...paginationProps}/>
             <ListScreens screens={screens} loading={loading}/>
             <Pagination {...paginationProps}/>

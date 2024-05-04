@@ -1,4 +1,6 @@
 import {QueryParams, ScreenListResponse} from '../types/screen'
+import {uri} from "@lib/config";
+
 
 interface Options {
     params: QueryParams,
@@ -7,7 +9,7 @@ interface Options {
 
 const fetchScreens = async ({params, token}:Options): Promise<ScreenListResponse>=>{
     //Nuevo objeto URL que nos permite manejar la url como un objeto
-    const url = new URL("https://challenge-front-7fw1.onrender.com/display")
+    const url = new URL(`${uri}/display`)
     //Agregamois los params provenientes de los argumentos de la función a url
     Object.entries(params).forEach(([key, value]) => {
         return url.searchParams.append(key, value)

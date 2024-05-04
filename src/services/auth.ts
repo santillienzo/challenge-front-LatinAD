@@ -1,7 +1,8 @@
 import { AuthBody, User } from "types/user"
+import {uri} from "@lib/config";
 
 const login = async (body:AuthBody): Promise<User>=>{
-    const res = await fetch("https://challenge-front-7fw1.onrender.com/login", {
+    const res = await fetch(`${uri}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

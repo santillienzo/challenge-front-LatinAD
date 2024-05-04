@@ -2,6 +2,7 @@ import useScreen from '@hooks/useScreen'
 import { useEffect, useState } from 'react'
 import { Screen, ScreenListResponse } from 'types/screen'
 import ScreenItem from '../ScreenItem/ScreenItem'
+import { List, Paper } from '@mui/material'
 import style from './ListScreens.module.css'
 
 //Render list of screens
@@ -19,13 +20,15 @@ const ListScreens = () => {
         })
     }, [getScreens])
     return (
-        <div className={style.listScreens}>
-            {
-                screens.map((screen) => {
-                    return <ScreenItem key={screen.id} screen={screen}/>
-                })
-            }
-        </div>
+        <Paper square className={style.listScreensContainer}>
+            <List className={style.listScreens} component="ul">
+                {
+                    screens.map((screen) => {
+                        return <ScreenItem key={screen.id} screen={screen}/>
+                    })
+                }
+            </List>
+        </Paper>
     )
 }
 

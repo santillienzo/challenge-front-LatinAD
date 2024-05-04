@@ -33,6 +33,7 @@ const AuthProvider = ({ children }:Props) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   //State donde se almacenará el error en caso de haber uno
   const [error, setError] = useState<string | null>(null)
+  //Controlamos el loading del componente
   const [loading, setLoading] = useState<boolean>(false)
 
   //Función encargada de iniciar sesión

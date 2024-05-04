@@ -23,6 +23,7 @@ const login = async (body:AuthBody): Promise<User>=>{
     return data
 }
 
+//Export service
 export const authService = {
     login
 }

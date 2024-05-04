@@ -27,6 +27,10 @@ export default defineConfig({
         find: '@services',
         replacement: path.resolve(__dirname,"./src/services")
       },
+      { 
+        find: '@lib',
+        replacement: path.resolve(__dirname,"./src/lib")
+      },
     ]
   }
 })

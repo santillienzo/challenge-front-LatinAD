@@ -1,10 +1,10 @@
-import './App.css'
 import LoginView from '@components/views/LoginView/LoginView';
 import PrivateRoute from '@components/feature/auth/PrivateRoute/PrivateRoute';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import HomeView from '@components/views/HomeView/HomeView';
 
 /*
   Definimos un router con el objeto createBrowserRouter de react-router-dom. 
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h3>Hola</h3>,
+        element: <HomeView/>,
       }
     ]
   },

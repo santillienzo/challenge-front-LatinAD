@@ -2,17 +2,12 @@ import useScreen from '@hooks/useScreen'
 import { useCallback, useEffect, useState } from 'react'
 import { QueryParams, Screen, ScreenListResponse } from 'types/screen'
 import styles from './ScreensControl.module.css'
-import { Pagination, PaginationProps } from '@mui/material'
+import { Button, Pagination, PaginationProps } from '@mui/material'
 import ListScreens from '../ListScreens/ListScreens'
 import ScreenFilter from '../ScreensFilter/ScreenFilter'
-
-//valor por defecto del pageSize
-const pageSize = 10
-
-//Esta función calcula el offset de nuestra query
-const calculateOffset = (pageSize:number, page:number)=>{
-    return pageSize * (page-1)
-}
+import { calculateOffset } from '@lib/utils.number'
+import { defaultPageSize as pageSize } from '@lib/config'
+import AddIcon from '@mui/icons-material/Add';
 
 const ScreensControl = () => {
     const {getScreens, loading} = useScreen()
@@ -63,7 +58,10 @@ const ScreensControl = () => {
 
     return (
         <div className={styles.screensControlContainer}>
-            {/* ADD FILTER */}
+            <div className={styles.screensControlHeader}>
+                <h1>Pantallas</h1>
+                <Button variant='contained' startIcon={<AddIcon/>} >Agregar<span className={styles.titleSpan}>&nbsp;pantalla</span></Button>
+            </div>
             <ScreenFilter 
                 pageSize={pageSize}
                 onSubmit={handleFilterSubmit}

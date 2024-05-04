@@ -1,13 +1,8 @@
-.listScreensContainer{
-    width: 100%;
+.listScreensWrapper {
+    min-height: calc(72px * 10);
 }
 
 .listScreens{
     padding: 0 !important;
 }
 
-@media screen and (min-width: 768px) {
-    .listScreensContainer{
-        width: 768px;
-    }
-}

@@ -4,7 +4,7 @@ export interface QueryParams {
     pageSize: number,
     offset: number,
     name?: string,
-    type?: ScreenType
+    type?: ScreenType | null
 }
 
 export interface Screen {

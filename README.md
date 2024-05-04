@@ -3,12 +3,17 @@
 ## Descripción
 
 ## Ejecución
-### 1) Instalar las dependencias
+### 3) Crear un archivo .env con el siguiente contenido: 
+```
+VITE_URI=https://challenge-front-7fw1.onrender.com
+```
+
+### 2) Instalar las dependencias
 ```
 npm install
 ```
 
-### 2) Ejecutar el proyecto
+### 3) Ejecutar el proyecto
 ```
 npm run dev
 ```

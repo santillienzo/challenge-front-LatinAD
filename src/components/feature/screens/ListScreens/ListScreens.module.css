@@ -1,13 +1,4 @@
-.listScreensContainer{
-    width: 100%;
-}
-
 .listScreens{
     padding: 0 !important;
 }
 
-@media screen and (min-width: 768px) {
-    .listScreensContainer{
-        width: 768px;
-    }
-}

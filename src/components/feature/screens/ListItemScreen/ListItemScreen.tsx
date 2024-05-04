@@ -1,5 +1,5 @@
 import { Screen } from 'types/screen'
-import styles from './ScreenItem.module.css'
+import styles from './ListItemScreen.module.css'
 import { Button, Divider, ListItem, ListItemText } from '@mui/material'
 import { formatScreenType } from '@lib/utils.string';
 import { useNavigate } from 'react-router-dom';

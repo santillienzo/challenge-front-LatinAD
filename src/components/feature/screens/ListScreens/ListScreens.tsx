@@ -1,7 +1,7 @@
 import useScreen from '@hooks/useScreen'
 import { useEffect, useState } from 'react'
 import { Screen, ScreenListResponse } from 'types/screen'
-import ScreenItem from '../ScreenItem/ScreenItem'
+import ScreenItem from '../ListItemScreen/ListItemScreen'
 import { List, Paper } from '@mui/material'
 import style from './ListScreens.module.css'
 

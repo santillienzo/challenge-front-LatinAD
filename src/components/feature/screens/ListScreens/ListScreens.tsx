@@ -3,17 +3,21 @@ import { List, Paper } from '@mui/material'
 import style from './ListScreens.module.css'
 import { Screen } from 'types/screen'
 import EmptyDataAdvice from '@components/common/EmptyDataAdvice/EmptyDataAdvice'
+import TableDataSkeleton from '@components/common/TableDataSkeleton/TableDataSkeleton'
 
 type Props = {
-    screens: Screen[]
+    screens: Screen[],
+    loading?: boolean,
 }
 
 //Render list of screens
-const ListScreens = ({screens}:Props) => {
+const ListScreens = ({screens, loading = true}:Props) => {
     return (
         <Paper square className={style.listScreensWrapper}>
             {
-                screens.length === 0 ? (<EmptyDataAdvice/>):(
+                loading ? (
+                    <TableDataSkeleton/>
+                ):screens.length === 0 ? (<EmptyDataAdvice/>):(
                     <List className={style.listScreens} component="ul">
                         {
                             screens.map((screen) => {

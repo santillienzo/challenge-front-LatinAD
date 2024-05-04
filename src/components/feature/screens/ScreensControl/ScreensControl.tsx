@@ -8,7 +8,7 @@ import ListScreens from '../ListScreens/ListScreens'
 const pageSize = 10
 
 const ScreensControl = () => {
-    const {getScreens} = useScreen()
+    const {getScreens, loading} = useScreen()
     //Total de pantallas
     //State donde se almacenarán las pantallas
     const [screens, setScreens] = useState<Screen[]>([])
@@ -50,7 +50,7 @@ const ScreensControl = () => {
     return (
         <div className={styles.screensControlContainer}>
             <Pagination {...paginationProps}/>
-            <ListScreens screens={screens}/>
+            <ListScreens screens={screens} loading={loading}/>
             <Pagination {...paginationProps}/>
         </div>
     )

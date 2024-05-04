@@ -1,11 +1,18 @@
 import useScreen from '@hooks/useScreen'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { QueryParams, Screen, ScreenListResponse } from 'types/screen'
 import styles from './ScreensControl.module.css'
 import { Pagination, PaginationProps } from '@mui/material'
 import ListScreens from '../ListScreens/ListScreens'
+import ScreenFilter from '../ScreensFilter/ScreenFilter'
 
+//valor por defecto del pageSize
 const pageSize = 10
+
+//Esta función calcula el offset de nuestra query
+const calculateOffset = (pageSize:number, page:number)=>{
+    return pageSize * (page-1)
+}
 
 const ScreensControl = () => {
     const {getScreens, loading} = useScreen()
@@ -17,7 +24,7 @@ const ScreensControl = () => {
     //State donde se almacenarán los parámetros que usaremos para buscar en la bd
     const [queryParams, setQueryParams] = useState<QueryParams>({
         pageSize,
-        offset: pageSize * (page-1)
+        offset: calculateOffset(pageSize, page)
     })
 
     //Actualizamos la página y guardamos los valores en los estados correspondientes
@@ -25,9 +32,16 @@ const ScreensControl = () => {
         setPage(value)
         setQueryParams((prev) => ({
             ...prev,
-            offset: pageSize * (value-1)
+            offset: calculateOffset(pageSize, value)
         }))
     } 
+
+    //Al enviar el filtro se ejecturá esta función.
+    //useCallback para no crear la función en cada renderizado.  
+    const handleFilterSubmit = useCallback((values: QueryParams) => {
+        setPage(1)
+        setQueryParams(values)
+    }, [])
 
     //Ejecutamos este efecto cuando se carga el módulo
     useEffect(() => {
@@ -49,6 +63,8 @@ const ScreensControl = () => {
 
     return (
         <div className={styles.screensControlContainer}>
+            {/* ADD FILTER */}
+            <ScreenFilter onSubmit={handleFilterSubmit}/>
             <Pagination {...paginationProps}/>
             <ListScreens screens={screens} loading={loading}/>
             <Pagination {...paginationProps}/>

@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Collapse, FormControl, InputAdornment, InputLabel, MenuItem, Modal, Select, TextField, TextareaAutosize } from "@mui/material"
+import { Alert, Box, Button, Collapse, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Modal, Select, TextField, TextareaAutosize } from "@mui/material"
 import { getModalStyle } from "@lib/utils.some"
 import AddIcon from '@mui/icons-material/Add';
 import styles from './AddScreen.module.css'
@@ -42,16 +42,20 @@ const AddScreen = ({open, handleClose}:Props) => {
                         error={Boolean(inputErrors.name)}
                         helperText={inputErrors.name}
                     />
-                    <TextareaAutosize
-                        minRows={3}
-                        name="description"
-                        className={styles.inputTextArea}
-                        value={values.description}
-                        onChange={onChange}
-                        // error={Boolean(inputErrors.description)}
-                        // helperText={inputErrors.description}
-                        placeholder="Esta es una pantalla situada en la Avenida Este ... "
-                    />
+                    <FormControl fullWidth error={Boolean(inputErrors.description)}>
+                        <TextareaAutosize
+                            minRows={3}
+                            name="description"
+                            className={styles.inputTextArea}
+                            value={values.description}
+                            onChange={onChange}
+                            style={{
+                                outline: inputErrors.description ? '1px solid red' : undefined
+                            }}
+                            placeholder="Esta es una pantalla situada en la Avenida Este ... "
+                        />
+                        <FormHelperText>{inputErrors.description}</FormHelperText>
+                    </FormControl>
                     <div className={styles.sizeInputsContainer}>
                         <TextField
                             size="small"

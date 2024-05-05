@@ -1,0 +1,15 @@
+.modal{
+    width: 95%;
+}
+
+.btnsContainer{
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+@media screen and (min-width: 510px){
+    .modal{
+        width: 500px;
+    }
+}

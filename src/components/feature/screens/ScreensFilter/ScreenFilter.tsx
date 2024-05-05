@@ -99,6 +99,7 @@ const ScreenFilter = ({pageSize = 10,onSubmit}:Props) => {
                                 size='small'
                                 label="Nombre"
                                 name='name'
+                                value={filterValues.name}
                                 placeholder='Pantalla avenida Este'
                                 onChange={(event)=> {handleFilterValues(event.target.name, event.target.value)}}
                             />

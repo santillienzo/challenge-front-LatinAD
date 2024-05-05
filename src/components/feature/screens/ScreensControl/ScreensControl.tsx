@@ -8,19 +8,24 @@ import ScreenFilter from '../ScreensFilter/ScreenFilter'
 import { calculateOffset } from '@lib/utils.number'
 import { defaultPageSize as pageSize } from '@lib/config'
 import AddIcon from '@mui/icons-material/Add';
+import AddScreen from '../AddScreen/AddScreen'
 
 const ScreensControl = () => {
     const {getScreens, loading} = useScreen()
-    //Total de pantallas
-    //State donde se almacenarán las pantallas
+    //State que controla la visualización del modal 'agregar'
+    const [isAddOpen, setIsAddOpen] = useState(true)
+    //State donde se almacena las pantallas
     const [screens, setScreens] = useState<Screen[]>([])
     //State que almacena la página actual del listado
     const [page, setPage] = useState<number>(1)
-    //State donde se almacenarán los parámetros que usaremos para buscar en la bd
+    //State donde se almacena los parámetros que usaremos para buscar en la bd
     const [queryParams, setQueryParams] = useState<QueryParams>({
         pageSize,
         offset: calculateOffset(pageSize, page)
     })
+
+    const handleCloseAddModal = ()=> setIsAddOpen(false)
+    const handleOpenAddModal = ()=> setIsAddOpen(true)
 
     //Actualizamos la página y guardamos los valores en los estados correspondientes
     const handlePage = (event: React.ChangeEvent<unknown>, value: number) =>{
@@ -57,19 +62,28 @@ const ScreensControl = () => {
     }
 
     return (
-        <div className={styles.screensControlContainer}>
-            <div className={styles.screensControlHeader}>
-                <h1>Pantallas</h1>
-                <Button variant='contained' startIcon={<AddIcon/>} >Agregar<span className={styles.titleSpan}>&nbsp;pantalla</span></Button>
+        <>
+            <div className={styles.screensControlContainer}>
+                <div className={styles.screensControlHeader}>
+                    <h1>Pantallas</h1>
+                    <Button 
+                        variant='contained' 
+                        startIcon={<AddIcon/>} 
+                        onClick={handleOpenAddModal}
+                    >
+                        Agregar<span className={styles.titleSpan}>&nbsp;pantalla</span>
+                    </Button>
+                </div>
+                <ScreenFilter 
+                    pageSize={pageSize}
+                    onSubmit={handleFilterSubmit}
+                />
+                <Pagination {...paginationProps}/>
+                <ListScreens screens={screens} loading={loading}/>
+                <Pagination {...paginationProps}/>
             </div>
-            <ScreenFilter 
-                pageSize={pageSize}
-                onSubmit={handleFilterSubmit}
-            />
-            <Pagination {...paginationProps}/>
-            <ListScreens screens={screens} loading={loading}/>
-            <Pagination {...paginationProps}/>
-        </div>
+            <AddScreen open={isAddOpen} handleClose={handleCloseAddModal}/>
+        </>
     )
 }
 

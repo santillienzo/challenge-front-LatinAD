@@ -40,6 +40,14 @@ const fetchScreens = async ({params, token}:Options): Promise<ScreenListResponse
 }
 
 const createScreen = async (screen:Screen, token:string):Promise<Screen>=>{
+    const {price_per_day, resolution_height, resolution_width} = screen
+
+    //Parseamos los valores a enteros
+    const pricePerDay = parseInt(price_per_day)
+    const resolutionHeight = parseInt(resolution_height)
+    const resolutionWidth = parseInt(resolution_width)
+
+
     //Realiazamos una llamada a nuestra api
     const res = await fetch(`${uri}/display`,{
         method: 'POST',
@@ -48,7 +56,12 @@ const createScreen = async (screen:Screen, token:string):Promise<Screen>=>{
             //Envío de user token
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(screen),
+        body: JSON.stringify({
+            ...screen,
+            price_per_day: pricePerDay,
+            resolution_height: resolutionHeight,
+            resolution_width: resolutionWidth
+        }),
     })
 
     //validamos que no hayan errores

@@ -13,7 +13,6 @@ const useScreen = () => {
 
     //Obtenemos las pantallas enviando parámetros a la query
     const getScreens = useCallback(async (params:QueryParams, callback: (data:ScreenListResponse)=> void) => {
-
         setLoading(true)
         try {
             const res = await screenService.fetchScreens({params, token})

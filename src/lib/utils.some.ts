@@ -10,5 +10,6 @@ export const getModalStyle = () => {
         pt: 2,
         px: 4,
         pb: 3,
+        outline: 'none'
     }
 };

@@ -1,12 +1,9 @@
 import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router-dom";
+import { Errors } from "types/misc";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-type Errors = {
-  [k:string]: string
-}
 
 //CUSTOM HOOK
 

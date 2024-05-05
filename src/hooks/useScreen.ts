@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react"
-import { QueryParams, ScreenListResponse } from "../types/screen"
+import { QueryParams, Screen, ScreenListResponse } from "../types/screen"
 import { screenService } from "@services/screen"
 import { useAuth } from "./useAuth"
 
@@ -22,14 +22,33 @@ const useScreen = () => {
             }
             
         } catch (error:any) {
-            console.log(error)
+            console.error(error)
             setError(error.message)
         } finally{
             setLoading(false)
         }
     }, [token])
 
-    return {getScreens, loading, error}
+    //Esta función creará una nueva pantalla en la base de datos e imapactará en la interfaz
+    const addScreen = async (newScreen: Screen, callback: (screen:Screen)=> void)=>{
+        setLoading(true)
+
+        try {
+            //Ejecutamos el servicio
+            const res = await screenService.createScreen(newScreen, token)
+
+            if (res) {
+                callback(res)
+            }
+        } catch (error:any) {
+            console.error(error)
+            setError(error.message)
+        } finally{
+            setLoading(false)
+        }
+    }
+
+    return {getScreens, loading, error, addScreen}
 }
 
 export default useScreen

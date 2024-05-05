@@ -1,26 +1,41 @@
 import { SelectChangeEvent } from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Errors } from "types/misc";
+import { ScreenType } from "types/screen";
+
+type FormValues = {
+    name: string,
+    description: string,
+    pricePerDay: string,
+    resolutionHeight: string,
+    resolutionWidth: string,
+    type: ScreenType
+}
+
+const initialValues:FormValues= {
+    name: "",
+    description: "",
+    pricePerDay: "",
+    resolutionHeight: "",
+    resolutionWidth: "",
+    type: 'indoor'
+}
 
 export const useAddScreenForm = ()=>{
 
     //Declaramos el state que almacenará los valores del formulario
-    const [values, setValues] = useState({
-        name: "",
-        description: "",
-        pricePerDay: "",
-        resolutionHeight: "",
-        resolutionWidth: "",
-        type: 'indoor'
-    });
+    const [values, setValues] = useState<FormValues>(initialValues);
     //Declaramos el state que almacenará los errores que tengamos en el form
     const [inputErrors, setInputErrors] = useState<Errors>({})
     //Validamos un error en particular del form
     const [error, setError] = useState<string | null>(null)
+    
+    const resetValues = ()=>{
+        setValues(initialValues)
+    }
 
     //Función para enviar el formulario
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = (callback: (values: FormValues)=> void) => {
         const {name, description, pricePerDay, resolutionHeight, resolutionWidth} = values
         //Validamos que no hayan errores
         const hasErrors = Object.keys(inputErrors).length > 0
@@ -36,12 +51,7 @@ export const useAddScreenForm = ()=>{
 
 
         if (!hasErrors) {
-            alert("Se ejecutó")
-            console.log(values)
-            //Ejecutamos el submit
-            // login(values, ()=>{
-            //     navigation('/')
-            // })
+            callback(values)
         }
     };
 
@@ -100,5 +110,5 @@ export const useAddScreenForm = ()=>{
 
 
 
-    return {values, onChange, onSubmit, inputErrors, error}
+    return {values, onChange, onSubmit, inputErrors, error, resetValues}
 }

@@ -6,17 +6,42 @@ import HeightIcon from '@mui/icons-material/Height';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useAddScreenForm } from "@hooks/useAddScreenForm";
+import { Screen } from "types/screen";
+import { FormEvent } from "react";
 
 
 type Props = {
     open:boolean,
-    handleClose: () => void
+    handleClose: () => void,
+    actions: {
+        add: (screen: Screen)=>void
+    }
 }
 
-const AddScreen = ({open, handleClose}:Props) => {
-    const {values, onSubmit, inputErrors, onChange, error} = useAddScreenForm()
+const AddScreen = ({open, handleClose, actions}:Props) => {
+    //Extraemos los datos del hook personalzdo
+    const {values, onSubmit, inputErrors, onChange, error, resetValues} = useAddScreenForm()
 
-  return (
+    const handleSubmit = (event: FormEvent<HTMLFormElement>)=>{
+        event.preventDefault()
+        if (actions && actions.add) {
+            onSubmit((values)=>{
+                const {type, resolutionWidth, resolutionHeight, pricePerDay, description, name} = values
+                actions.add({
+                    name,
+                    description,
+                    price_per_day: pricePerDay,
+                    resolution_height: resolutionHeight,
+                    resolution_width: resolutionWidth,
+                    type
+                })
+                handleClose()
+                resetValues()
+            })
+        }
+    }
+
+    return (
     <Modal
         open={open}
         onClose={handleClose}
@@ -29,7 +54,7 @@ const AddScreen = ({open, handleClose}:Props) => {
             <Collapse in={Boolean(error)} unmountOnExit>
                 <Alert severity="error">{error}</Alert>
             </Collapse>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className={styles.formContainer}>
                     <TextField
                         fullWidth

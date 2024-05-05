@@ -11,9 +11,9 @@ import AddIcon from '@mui/icons-material/Add';
 import AddScreen from '../AddScreen/AddScreen'
 
 const ScreensControl = () => {
-    const {getScreens, loading} = useScreen()
+    const {getScreens, loading, addScreen} = useScreen()
     //State que controla la visualización del modal 'agregar'
-    const [isAddOpen, setIsAddOpen] = useState(true)
+    const [isAddOpen, setIsAddOpen] = useState(false)
     //State donde se almacena las pantallas
     const [screens, setScreens] = useState<Screen[]>([])
     //State que almacena la página actual del listado
@@ -42,6 +42,13 @@ const ScreensControl = () => {
         setPage(1)
         setQueryParams(values)
     }, [])
+
+    //Cargamos una nueva pantalla en array
+    const handleAddScreen = (newScreen: Screen)=>{
+        addScreen(newScreen, (response:Screen)=>{
+            setScreens((prev) => [response, ...prev])
+        })
+    }
 
     //Ejecutamos este efecto cuando se carga el módulo
     useEffect(() => {
@@ -82,7 +89,7 @@ const ScreensControl = () => {
                 <ListScreens screens={screens} loading={loading}/>
                 <Pagination {...paginationProps}/>
             </div>
-            <AddScreen open={isAddOpen} handleClose={handleCloseAddModal}/>
+            <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} actions={{add: handleAddScreen}}/>
         </>
     )
 }

@@ -2,30 +2,30 @@ import useScreen from '@hooks/useScreen'
 import { useCallback, useEffect, useState } from 'react'
 import { QueryParams, Screen, ScreenListResponse } from 'types/screen'
 import styles from './ScreensControl.module.css'
-import { Pagination, PaginationProps } from '@mui/material'
+import { Button, Pagination, PaginationProps } from '@mui/material'
 import ListScreens from '../ListScreens/ListScreens'
 import ScreenFilter from '../ScreensFilter/ScreenFilter'
-
-//valor por defecto del pageSize
-const pageSize = 10
-
-//Esta función calcula el offset de nuestra query
-const calculateOffset = (pageSize:number, page:number)=>{
-    return pageSize * (page-1)
-}
+import { calculateOffset } from '@lib/utils.number'
+import { defaultPageSize as pageSize } from '@lib/config'
+import AddIcon from '@mui/icons-material/Add';
+import AddScreen from '../AddScreen/AddScreen'
 
 const ScreensControl = () => {
-    const {getScreens, loading} = useScreen()
-    //Total de pantallas
-    //State donde se almacenarán las pantallas
+    const {getScreens, loading, addScreen} = useScreen()
+    //State que controla la visualización del modal 'agregar'
+    const [isAddOpen, setIsAddOpen] = useState(false)
+    //State donde se almacena las pantallas
     const [screens, setScreens] = useState<Screen[]>([])
     //State que almacena la página actual del listado
     const [page, setPage] = useState<number>(1)
-    //State donde se almacenarán los parámetros que usaremos para buscar en la bd
+    //State donde se almacena los parámetros que usaremos para buscar en la bd
     const [queryParams, setQueryParams] = useState<QueryParams>({
         pageSize,
         offset: calculateOffset(pageSize, page)
     })
+
+    const handleCloseAddModal = ()=> setIsAddOpen(false)
+    const handleOpenAddModal = ()=> setIsAddOpen(true)
 
     //Actualizamos la página y guardamos los valores en los estados correspondientes
     const handlePage = (event: React.ChangeEvent<unknown>, value: number) =>{
@@ -42,6 +42,13 @@ const ScreensControl = () => {
         setPage(1)
         setQueryParams(values)
     }, [])
+
+    //Cargamos una nueva pantalla en array
+    const handleAddScreen = (newScreen: Screen)=>{
+        addScreen(newScreen, (response:Screen)=>{
+            setScreens((prev) => [response, ...prev])
+        })
+    }
 
     //Ejecutamos este efecto cuando se carga el módulo
     useEffect(() => {
@@ -62,16 +69,28 @@ const ScreensControl = () => {
     }
 
     return (
-        <div className={styles.screensControlContainer}>
-            {/* ADD FILTER */}
-            <ScreenFilter 
-                pageSize={pageSize}
-                onSubmit={handleFilterSubmit}
-            />
-            <Pagination {...paginationProps}/>
-            <ListScreens screens={screens} loading={loading}/>
-            <Pagination {...paginationProps}/>
-        </div>
+        <>
+            <div className={styles.screensControlContainer}>
+                <div className={styles.screensControlHeader}>
+                    <h1>Pantallas</h1>
+                    <Button 
+                        variant='contained' 
+                        startIcon={<AddIcon/>} 
+                        onClick={handleOpenAddModal}
+                    >
+                        Agregar<span className={styles.titleSpan}>&nbsp;pantalla</span>
+                    </Button>
+                </div>
+                <ScreenFilter 
+                    pageSize={pageSize}
+                    onSubmit={handleFilterSubmit}
+                />
+                <Pagination {...paginationProps}/>
+                <ListScreens screens={screens} loading={loading}/>
+                <Pagination {...paginationProps}/>
+            </div>
+            <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} actions={{add: handleAddScreen}}/>
+        </>
     )
 }
 

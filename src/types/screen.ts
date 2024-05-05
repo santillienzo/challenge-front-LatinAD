@@ -8,11 +8,11 @@ export interface QueryParams {
 }
 
 export interface Screen {
-    id: string,
+    id?: string,
     name: string,
     description: string,
-    picture_url: string,
-    user_id: number,
+    picture_url?: string,
+    user_id?: number,
     price_per_day: string,
     resolution_height: string,
     resolution_width: string,

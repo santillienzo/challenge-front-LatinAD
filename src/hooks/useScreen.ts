@@ -50,12 +50,12 @@ const useScreen = () => {
     }, [token])
 
     //Obtenemos una pantalla en específico enviando el id de la pantalla a la query
-    const deleteScreen = useCallback(async (id: number, callback: (response:Screen)=> void)=>{
+    const deleteScreen = useCallback(async (id: number, callback?: (response:Screen)=> void)=>{
         setLoading(true)
         try {
             const res = await screenService.deleteScreen({id, token})
             if (res) {
-                callback(res)
+                callback && callback(res)
                 return res
             }
             

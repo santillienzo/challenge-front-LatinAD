@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { Dispatch, useState } from 'react';
 import AddScreen from '@components/feature/screens/AddScreenModal/AddScreenModal';
 import { toast } from 'sonner';
+import DeleteModal from '../DeleteModal/DeleteModal';
 
 type Props = {
     screen:Screen,
@@ -23,9 +24,15 @@ const DetailScreen = ({screen, setScreen}:Props) => {
     const navigation = useNavigate()
     //State que controla la visualización del modal 'editar'
     const [isEditOpen, setIsEditOpen] = useState(false)
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
+    //Funciones para controlar la apertura del modal de edición
     const handleCloseEditModal = ()=> setIsEditOpen(false)
     const handleOpenEditModal = ()=> setIsEditOpen(true)
+
+    //Funciones para controlar la apertura del modal de eliminación
+    const handleCloseDeleteModal = ()=> setIsDeleteOpen(false)
+    const handleOpenDeleteModal = ()=> setIsDeleteOpen(true)
 
     //Obtenemos la pantalla actualizada y utilizamos nuestro hook
     const handleEdit = (updatedScreen: Screen)=>{
@@ -46,9 +53,18 @@ const DetailScreen = ({screen, setScreen}:Props) => {
     }
 
     const handleDelete = ()=>{
-        deleteScreen(Number(screen.id), () => {
-            //Una vez eliminado redirigimos al inicio
-            navigation(`/`)
+        const promise = deleteScreen(Number(screen.id))
+        
+        toast.promise(promise, {
+            loading: 'Eliminando...',
+            success: () => {
+                return `Pantalla eliminada correctamente`;
+            },
+            error: (error) => error,
+            finally:()=> {
+                //Una vez eliminado redirigimos al inicio
+                navigation(`/`)
+            }
         })
     }
 
@@ -87,7 +103,7 @@ const DetailScreen = ({screen, setScreen}:Props) => {
                     </div>
                 </div>
                 <footer className={styles.actionButtonsContainer}>
-                    <Button color='error' onClick={handleDelete}>Borrar</Button>
+                    <Button color='error' onClick={handleOpenDeleteModal}>Borrar</Button>
                     <Button variant='contained' onClick={handleOpenEditModal}>Editar</Button>
                 </footer>
             </Paper>
@@ -97,6 +113,7 @@ const DetailScreen = ({screen, setScreen}:Props) => {
                 action={handleEdit}
                 initialValues={screen}
             />
+            <DeleteModal open={isDeleteOpen} handleClose={handleCloseDeleteModal} name={screen.name} handleDelete={handleDelete}/>
         </>
     )
 }

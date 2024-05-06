@@ -23,7 +23,7 @@ const ScreenItem = ({screen,}:Props) => {
       <ListItem className={styles.screenContainer}>
         <ListItemText primary={name} secondary={formatScreenType(type)}/>
         <div className={styles.actionButtons}>
-          <Button onClick={redirect}>Ver más</Button>
+          <Button onClick={redirect} className={styles.btn}>Ver más</Button>
         </div>
       </ListItem>
       <Divider/>

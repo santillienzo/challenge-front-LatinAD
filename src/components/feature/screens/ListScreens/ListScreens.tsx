@@ -8,17 +8,25 @@ import TableDataSkeleton from '@components/common/TableDataSkeleton/TableDataSke
 type Props = {
     screens: Screen[],
     loading?: boolean,
+    addModal: () => void
 }
 
 //Render list of screens
-const ListScreens = ({screens, loading}:Props) => {
+const ListScreens = ({screens, loading, addModal}:Props) => {
     return (
         <Paper square className={style.listScreensWrapper}>
             {
                 loading ? (
                     <TableDataSkeleton/>
                 ):screens.length === 0 ? (
-                    <EmptyDataAdvice>No se encontraron datos.</EmptyDataAdvice>
+                    <EmptyDataAdvice
+                        actionButton={{
+                            label: 'Agregar',
+                            action: addModal
+                        }}
+                    >
+                        No se encontraron datos.
+                    </EmptyDataAdvice>
                 ):(
                     <List className={style.listScreens} component="ul">
                         {

@@ -108,7 +108,7 @@ const ScreensControl = () => {
                     onSubmit={handleFilterSubmit}
                 />
                 <Pagination {...paginationProps}/>
-                <ListScreens screens={screens} loading={loading}/>
+                <ListScreens screens={screens} loading={loading} addModal={handleOpenAddModal}/>
                 <Pagination {...paginationProps}/>
             </div>
             <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} action={handleAddScreen}/>

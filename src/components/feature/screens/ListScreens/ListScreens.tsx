@@ -17,7 +17,9 @@ const ListScreens = ({screens, loading}:Props) => {
             {
                 loading ? (
                     <TableDataSkeleton/>
-                ):screens.length === 0 ? (<EmptyDataAdvice/>):(
+                ):screens.length === 0 ? (
+                    <EmptyDataAdvice>No se encontraron datos.</EmptyDataAdvice>
+                ):(
                     <List className={style.listScreens} component="ul">
                         {
                             screens.map((screen) => {

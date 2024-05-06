@@ -9,6 +9,7 @@ import { calculateOffset } from '@lib/utils.number'
 import { defaultPageSize as pageSize } from '@lib/config'
 import AddIcon from '@mui/icons-material/Add';
 import AddScreen from '../AddScreenModal/AddScreenModal'
+import { toast } from 'sonner'
 
 const INITIAL_PAGE = 1
 
@@ -49,14 +50,22 @@ const ScreensControl = () => {
 
     //Cargamos una nueva pantalla en array
     const handleAddScreen = (newScreen: Screen)=>{
-        addScreen(newScreen, (response:Screen)=>{
+        const promise = addScreen(newScreen, (response:Screen)=>{
             setScreens((prev) => [response, ...prev])
             setPage(INITIAL_PAGE)
             setQueryParams((prev) => ({
                 ...prev,
                 offset: calculateOffset(pageSize, INITIAL_PAGE)
             }))
+        })
 
+        //Enviamos la promesa a través del objeto toast para recibir un feedback del estado de nuestra petición
+        toast.promise(promise, {
+            loading: 'Agregando...',
+            success: () => {
+                return `Pantalla agregada correctamente`;
+            },
+            error: (error) => error,
         })
     }
 

@@ -5,13 +5,26 @@ import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import styles from "./DetailScreen.module.css";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { formatScreenType } from '@lib/utils.string';
+import useScreen from '@hooks/useScreen';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     screen:Screen
 }
 
 const DetailScreen = ({screen}:Props) => {
+    //screen hook
+    const {deleteScreen} = useScreen()
+    //Instanciamos hook de react-router
+    const navigation = useNavigate()
 
+
+    const handleDelete = ()=>{
+        deleteScreen(Number(screen.id), () => {
+            //Una vez eliminado redirigimos al inicio
+            navigation(`/`)
+        })
+    }
 
     return (
         <Paper className={styles.detailContainer}>
@@ -47,7 +60,7 @@ const DetailScreen = ({screen}:Props) => {
                 </div>
             </div>
             <footer className={styles.actionButtonsContainer}>
-                <Button color='error'>Borrar</Button>
+                <Button color='error' onClick={handleDelete}>Borrar</Button>
                 <Button variant='contained'>Editar</Button>
             </footer>
         </Paper>

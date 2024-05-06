@@ -14,6 +14,7 @@ const DetailScreenView = () => {
   //State donde se almacena la pantalla buscada en la bd
   const [screen, setScreen] = useState<Screen | null>(null)
 
+  //Efecto que obtiene la info de la bd
   useEffect(()=>{
   if (id) {
     getOneScreen(Number(id), (response)=>{

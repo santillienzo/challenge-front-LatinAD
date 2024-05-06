@@ -1,15 +1,21 @@
+.detailContainer{
+    padding: 18px;
+}
+
+.infoContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
 .imgContainer{
-    width: 550px;
+    width: 100%;
     border-radius: 20px;
     overflow: hidden;
 }
 
 .imgContainer img{
     width: 100%;
-}
-
-.detailContainer{
-    padding: 18px;
 }
 
 .screenTitle{
@@ -32,14 +38,27 @@
     align-items: flex-start;
 }
 
-.infoContainer{
-    display: flex;
-    gap: 25px;
-}
-
 .actionButtonsContainer {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 15px;
+}
+
+@media screen and (min-width: 576px) {
+    .infoContainer{
+        flex-direction: row;
+    }
+
+    .imgContainer{
+        min-width: 350px;
+        max-width: 350px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .imgContainer{
+            min-width: 550px;
+            max-width: 550px;
+        }
+    }
 }

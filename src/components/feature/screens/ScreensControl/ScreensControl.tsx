@@ -31,11 +31,13 @@ const ScreensControl = () => {
 
     //Actualizamos la página y guardamos los valores en los estados correspondientes
     const handlePage = (event: React.ChangeEvent<unknown>, value: number) =>{
-        setPage(value)
-        setQueryParams((prev) => ({
-            ...prev,
-            offset: calculateOffset(pageSize, value)
-        }))
+        if (event) {
+            setPage(value)
+            setQueryParams((prev) => ({
+                ...prev,
+                offset: calculateOffset(pageSize, value)
+            }))
+        }
     } 
 
     //Al enviar el filtro se ejecturá esta función.

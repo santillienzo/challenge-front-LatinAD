@@ -1,7 +1,7 @@
 import { Alert, Box, Button, Collapse, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Modal, Select, TextField, TextareaAutosize } from "@mui/material"
 import { getModalStyle } from "@lib/utils.some"
 import AddIcon from '@mui/icons-material/Add';
-import styles from './AddScreen.module.css'
+import styles from './AddScreenModal.module.css'
 import HeightIcon from '@mui/icons-material/Height';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';

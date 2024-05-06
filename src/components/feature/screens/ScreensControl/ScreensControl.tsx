@@ -5,7 +5,7 @@ import styles from './ScreensControl.module.css'
 import { Button, Pagination, PaginationProps } from '@mui/material'
 import ListScreens from '../ListScreens/ListScreens'
 import ScreenFilter from '../ScreensFilter/ScreenFilter'
-import { calculateOffset } from '@lib/utils.number'
+import { calculateOffset, calculateTotalPages } from '@lib/utils.number'
 import { defaultPageSize as pageSize } from '@lib/config'
 import AddIcon from '@mui/icons-material/Add';
 import AddScreen from '../AddScreenModal/AddScreenModal'
@@ -19,6 +19,8 @@ const ScreensControl = () => {
     const [isAddOpen, setIsAddOpen] = useState(false)
     //State donde se almacena las pantallas
     const [screens, setScreens] = useState<Screen[]>([])
+    //Cantidad total de pantallas
+    const [totalScreens, setTotalScreens] = useState<number>(0)
     //State que almacena la página actual del listado
     const [page, setPage] = useState<number>(INITIAL_PAGE)
     //State donde se almacena los parámetros que usaremos para buscar en la bd
@@ -74,13 +76,14 @@ const ScreensControl = () => {
         //Obtenemos las pantallas enviando parámetros a la query
         getScreens(queryParams,(response:ScreenListResponse)=>{
             setScreens(response.data)
+            setTotalScreens(response.totalCount)
         })
     }, [getScreens, queryParams])
 
     //Configuramos los props de la paginación
     const paginationProps:PaginationProps = {
         color: 'primary',
-        count: 5,
+        count: calculateTotalPages(totalScreens, pageSize),
         variant: 'outlined',
         shape: "rounded",
         onChange: handlePage,

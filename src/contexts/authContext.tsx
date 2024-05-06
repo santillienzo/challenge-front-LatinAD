@@ -65,7 +65,7 @@ const AuthProvider = ({ children }:Props) => {
     //Limpieza de usuario y token
     setUser(null);
     setToken("");
-    localStorage.removeItem("site");
+    localStorage.removeItem("token");
     //Si existe el callback se ejecutará
     callback && callback()
   };

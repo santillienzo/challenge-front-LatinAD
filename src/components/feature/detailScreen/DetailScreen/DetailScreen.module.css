@@ -45,20 +45,12 @@
     margin-top: 15px;
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 768px) {
     .infoContainer{
         flex-direction: row;
     }
-
     .imgContainer{
-        min-width: 350px;
-        max-width: 350px;
-    }
-
-    @media screen and (min-width: 768px) {
-        .imgContainer{
-            min-width: 550px;
-            max-width: 550px;
-        }
+        min-width: 550px;
+        max-width: 550px;
     }
 }

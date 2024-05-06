@@ -1,6 +1,10 @@
-import { Button, Paper } from '@mui/material'
+import { Button, Chip, Paper, Typography } from '@mui/material'
 import { Screen } from 'types/screen'
+import HeightIcon from '@mui/icons-material/Height';
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import styles from "./DetailScreen.module.css";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { formatScreenType } from '@lib/utils.string';
 
 type Props = {
     screen:Screen
@@ -11,24 +15,41 @@ const DetailScreen = ({screen}:Props) => {
 
     return (
         <Paper className={styles.detailContainer}>
-            <h3 className={styles.screenTitle}>
-                {screen.name}
-            </h3>
-            <div>
-                <div>
+            <div className={styles.infoContainer}>
+                <div className={styles.imgContainer}>
                     <img src={screen.picture_url} alt={screen.name} />
                 </div>
                 <div>
-                    <p>{screen.description}</p>
-                    <p>Tipo: {screen.type}</p>
-                    <p>Precio: {screen.price_per_day}</p>
-                    <p>Resolución: {screen.resolution_width} x {screen.resolution_height}</p>
+                    <h3 className={styles.screenTitle}>
+                        {screen.name}
+                    </h3>
+                    <p className={styles.description}>{screen.description}</p>
+                    <div className={styles.detailItemContainer}>
+                        <div className={styles.detailItem}>
+                            <Typography variant='overline'>Tipo</Typography>
+                            <Chip color='info' label={formatScreenType(screen.type)}/>
+                        </div>
+                        <div className={styles.detailItem}>
+                            <Typography variant='overline'>Resolución</Typography>
+                            <div>
+                                <Chip variant='outlined' icon={<TrendingFlatIcon/>} label={screen.resolution_width}/>
+                                &nbsp;
+                                x 
+                                &nbsp;
+                                <Chip variant='outlined' icon={<HeightIcon/>} label={screen.resolution_height}/>
+                            </div>
+                        </div>
+                        <div className={styles.detailItem}>
+                            <Typography variant='overline'>Precio por día</Typography>
+                            <Chip icon={<AttachMoneyIcon fontSize='small'/>} label={screen.price_per_day}/>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
+            <footer className={styles.actionButtonsContainer}>
                 <Button color='error'>Borrar</Button>
                 <Button variant='contained'>Editar</Button>
-            </div>
+            </footer>
         </Paper>
     )
 }

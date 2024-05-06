@@ -81,7 +81,28 @@ const useScreen = () => {
         }
     }
 
-    return {getScreens, getOneScreen, deleteScreen, addScreen, loading, error}
+    //Esta función buscará y actualizará la pantalla indicada por su id
+    const updateScreen = async (newScreen: Screen, callback: (screen:Screen)=> void)=>{
+        setLoading(true)
+
+        try {
+            //Ejecutamos el servicio
+            const res = await screenService.updateScreen(newScreen, token)
+
+            if (res) {
+                callback(res)
+                return res
+            }
+        } catch (error:any) {
+            console.error(error)
+            setError(error.message)
+            throw error.message
+        } finally{
+            setLoading(false)
+        }
+    }
+
+    return {getScreens, getOneScreen, deleteScreen, addScreen, loading, error, updateScreen}
 }
 
 export default useScreen

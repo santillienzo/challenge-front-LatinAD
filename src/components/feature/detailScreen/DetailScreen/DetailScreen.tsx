@@ -7,17 +7,43 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { formatScreenType } from '@lib/utils.string';
 import useScreen from '@hooks/useScreen';
 import { useNavigate } from 'react-router-dom';
+import { Dispatch, useState } from 'react';
+import AddScreen from '@components/feature/screens/AddScreenModal/AddScreenModal';
+import { toast } from 'sonner';
 
 type Props = {
-    screen:Screen
+    screen:Screen,
+    setScreen: Dispatch<Screen>
 }
 
-const DetailScreen = ({screen}:Props) => {
+const DetailScreen = ({screen, setScreen}:Props) => {
     //screen hook
-    const {deleteScreen} = useScreen()
+    const {deleteScreen, updateScreen} = useScreen()
     //Instanciamos hook de react-router
     const navigation = useNavigate()
+    //State que controla la visualización del modal 'editar'
+    const [isEditOpen, setIsEditOpen] = useState(false)
 
+    const handleCloseEditModal = ()=> setIsEditOpen(false)
+    const handleOpenEditModal = ()=> setIsEditOpen(true)
+
+    //Obtenemos la pantalla actualizada y utilizamos nuestro hook
+    const handleEdit = (updatedScreen: Screen)=>{
+        //Guardamos nuestra promesa en una variable para simplificar la lectura
+        const promise = updateScreen({ id: screen.id,...updatedScreen}, (response)=>{
+            setScreen(response)
+        })
+
+        //Enviamos la promesa a través del objeto toast para recibir un feedback del estado de nuestra petición
+        toast.promise(promise, {
+            loading: 'Editando...',
+            success: () => {
+                return `Pantalla actualizada correctamente`;
+            },
+            error: (error) => error,
+        })
+        
+    }
 
     const handleDelete = ()=>{
         deleteScreen(Number(screen.id), () => {
@@ -27,43 +53,51 @@ const DetailScreen = ({screen}:Props) => {
     }
 
     return (
-        <Paper className={styles.detailContainer}>
-            <div className={styles.infoContainer}>
-                <div className={styles.imgContainer}>
-                    <img src={screen.picture_url} alt={screen.name} />
-                </div>
-                <div>
-                    <h3 className={styles.screenTitle}>
-                        {screen.name}
-                    </h3>
-                    <p className={styles.description}>{screen.description}</p>
-                    <div className={styles.detailItemContainer}>
-                        <div className={styles.detailItem}>
-                            <Typography variant='overline'>Tipo</Typography>
-                            <Chip color='info' label={formatScreenType(screen.type)}/>
-                        </div>
-                        <div className={styles.detailItem}>
-                            <Typography variant='overline'>Resolución</Typography>
-                            <div>
-                                <Chip variant='outlined' icon={<TrendingFlatIcon/>} label={screen.resolution_width}/>
-                                &nbsp;
-                                x 
-                                &nbsp;
-                                <Chip variant='outlined' icon={<HeightIcon/>} label={screen.resolution_height}/>
+        <>
+            <Paper className={styles.detailContainer}>
+                <div className={styles.infoContainer}>
+                    <div className={styles.imgContainer}>
+                        <img src={screen.picture_url} alt={screen.name} />
+                    </div>
+                    <div>
+                        <h3 className={styles.screenTitle}>
+                            {screen.name}
+                        </h3>
+                        <p className={styles.description}>{screen.description}</p>
+                        <div className={styles.detailItemContainer}>
+                            <div className={styles.detailItem}>
+                                <Typography variant='overline'>Tipo</Typography>
+                                <Chip color='info' label={formatScreenType(screen.type)}/>
                             </div>
-                        </div>
-                        <div className={styles.detailItem}>
-                            <Typography variant='overline'>Precio por día</Typography>
-                            <Chip icon={<AttachMoneyIcon fontSize='small'/>} label={screen.price_per_day}/>
+                            <div className={styles.detailItem}>
+                                <Typography variant='overline'>Resolución</Typography>
+                                <div>
+                                    <Chip variant='outlined' icon={<TrendingFlatIcon/>} label={screen.resolution_width}/>
+                                    &nbsp;
+                                    x 
+                                    &nbsp;
+                                    <Chip variant='outlined' icon={<HeightIcon/>} label={screen.resolution_height}/>
+                                </div>
+                            </div>
+                            <div className={styles.detailItem}>
+                                <Typography variant='overline'>Precio por día</Typography>
+                                <Chip icon={<AttachMoneyIcon fontSize='small'/>} label={screen.price_per_day}/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <footer className={styles.actionButtonsContainer}>
-                <Button color='error' onClick={handleDelete}>Borrar</Button>
-                <Button variant='contained'>Editar</Button>
-            </footer>
-        </Paper>
+                <footer className={styles.actionButtonsContainer}>
+                    <Button color='error' onClick={handleDelete}>Borrar</Button>
+                    <Button variant='contained' onClick={handleOpenEditModal}>Editar</Button>
+                </footer>
+            </Paper>
+            <AddScreen 
+                open={isEditOpen} 
+                handleClose={handleCloseEditModal} 
+                action={handleEdit}
+                initialValues={screen}
+            />
+        </>
     )
 }
 

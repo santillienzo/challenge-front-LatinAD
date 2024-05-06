@@ -12,16 +12,11 @@ type FormValues = {
     type: ScreenType
 }
 
-const initialValues:FormValues= {
-    name: "",
-    description: "",
-    pricePerDay: "",
-    resolutionHeight: "",
-    resolutionWidth: "",
-    type: 'indoor'
+type Args = {
+    initialValues: FormValues
 }
 
-export const useAddScreenForm = ()=>{
+export const useAddScreenForm = ({initialValues}:Args)=>{
 
     //Declaramos el state que almacenará los valores del formulario
     const [values, setValues] = useState<FormValues>(initialValues);

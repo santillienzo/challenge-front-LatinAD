@@ -53,7 +53,7 @@ const fetchOneScreens = async ({id, token}:{id:number, token:string}): Promise<S
     
     if (!res.ok) {
         if (res.status === 401) {
-            throw new Error('El usuario o la contraseña son incorrectas. Intentalo de nuevo.');
+            throw new Error('No tienes permisos para ejecutar esta solicitud.');
         }else if(res.status === 500) {
             throw new Error('Error de servidor. Intentalo de nuevo más tarde.');
         } else{
@@ -94,7 +94,49 @@ const createScreen = async (screen:Screen, token:string):Promise<Screen>=>{
     //validamos que no hayan errores
     if (!res.ok) {
         if (res.status === 401) {
-            throw new Error('El usuario o la contraseña son incorrectas. Intentalo de nuevo.');
+            throw new Error('No tienes permisos para ejecutar esta solicitud.');
+        }else if(res.status === 500) {
+            throw new Error('Error de servidor. Intentalo de nuevo más tarde.');
+        } else{
+            throw new Error('Hubo un error. Intentalo de nuevo más tarde.');
+        }
+    }
+
+    const data:Screen = await res.json()
+
+    return data
+}
+
+const updateScreen = async (screen:Screen, token:string):Promise<Screen>=>{
+    const id = screen.id
+    const {price_per_day, resolution_height, resolution_width} = screen
+
+    //Parseamos los valores a enteros
+    const pricePerDay = parseInt(price_per_day)
+    const resolutionHeight = parseInt(resolution_height)
+    const resolutionWidth = parseInt(resolution_width)
+
+
+    //Realiazamos una llamada a nuestra api
+    const res = await fetch(`${uri}/display/${id}`,{
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            //Envío de user token
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            ...screen,
+            price_per_day: pricePerDay,
+            resolution_height: resolutionHeight,
+            resolution_width: resolutionWidth
+        }),
+    })
+
+    //validamos que no hayan errores
+    if (!res.ok) {
+        if (res.status === 401) {
+            throw new Error('No tienes permisos para ejecutar esta solicitud.');
         }else if(res.status === 500) {
             throw new Error('Error de servidor. Intentalo de nuevo más tarde.');
         } else{
@@ -122,7 +164,7 @@ const deleteScreen = async ({id, token}:{id:number, token:string}): Promise<Scre
     
     if (!res.ok) {
         if (res.status === 401) {
-            throw new Error('El usuario o la contraseña son incorrectas. Intentalo de nuevo.');
+            throw new Error('No tienes permisos para ejecutar esta solicitud.');
         }else if(res.status === 500) {
             throw new Error('Error de servidor. Intentalo de nuevo más tarde.');
         } else{
@@ -140,5 +182,6 @@ export const screenService = {
     fetchScreens,
     fetchOneScreens,
     createScreen,
+    updateScreen,
     deleteScreen
 }

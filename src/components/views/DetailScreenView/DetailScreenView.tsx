@@ -31,7 +31,7 @@ const DetailScreenView = () => {
         {
           loading ?  <DetailSkeleton/>
           : screen ?
-            <DetailScreen screen={screen}/>
+            <DetailScreen screen={screen} setScreen={setScreen}/>
           : <EmptyDataAdvice>No se encontró una pantalla. <Link to="/">Ir al inicio.</Link></EmptyDataAdvice>
         }
       </section>

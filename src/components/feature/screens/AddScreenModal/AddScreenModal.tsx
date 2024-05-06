@@ -1,6 +1,7 @@
 import { Alert, Box, Button, Collapse, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Modal, Select, TextField, TextareaAutosize } from "@mui/material"
 import { getModalStyle } from "@lib/utils.misc"
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 import styles from './AddScreenModal.module.css'
 import HeightIcon from '@mui/icons-material/Height';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
@@ -13,32 +14,39 @@ import { FormEvent } from "react";
 type Props = {
     open:boolean,
     handleClose: () => void,
-    actions: {
-        add: (screen: Screen)=>void
-    }
+    action:  (screen: Screen)=>void,
+    initialValues?: Screen
 }
 
-const AddScreen = ({open, handleClose, actions}:Props) => {
+const AddScreen = ({open, handleClose, action, initialValues}:Props) => {
     //Extraemos los datos del hook personalzdo
-    const {values, onSubmit, inputErrors, onChange, error, resetValues} = useAddScreenForm()
+    const {values, onSubmit, inputErrors, onChange, error, resetValues} = useAddScreenForm({
+        //Enviamos un objeto initialValues para validar si estamos editando o creando una nueva pantalla
+        initialValues: {
+            name: initialValues?.name || '',
+            description: initialValues?.description || '',
+            pricePerDay: initialValues?.price_per_day || '',
+            resolutionWidth: initialValues?.resolution_width || '',
+            resolutionHeight: initialValues?.resolution_height || '',
+            type: initialValues?.type || 'indoor'
+        }
+    })
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>)=>{
         event.preventDefault()
-        if (actions && actions.add) {
-            onSubmit((values)=>{
-                const {type, resolutionWidth, resolutionHeight, pricePerDay, description, name} = values
-                actions.add({
-                    name,
-                    description,
-                    price_per_day: pricePerDay,
-                    resolution_height: resolutionHeight,
-                    resolution_width: resolutionWidth,
-                    type
-                })
-                handleClose()
-                resetValues()
+        onSubmit((values)=>{
+            const {type, resolutionWidth, resolutionHeight, pricePerDay, description, name} = values
+            action({
+                name,
+                description,
+                price_per_day: pricePerDay,
+                resolution_height: resolutionHeight,
+                resolution_width: resolutionWidth,
+                type
             })
-        }
+            handleClose()
+            resetValues()
+        })
     }
 
     return (
@@ -50,7 +58,7 @@ const AddScreen = ({open, handleClose, actions}:Props) => {
         keepMounted
     >
         <Box className={styles.modal} sx={{ ...getModalStyle()}}>
-            <h2>Agregar pantalla</h2>
+            <h2>{initialValues ? 'Editar' : 'Agregar'} pantalla</h2>
             <Collapse in={Boolean(error)} unmountOnExit>
                 <Alert severity="error">{error}</Alert>
             </Collapse>
@@ -157,11 +165,11 @@ const AddScreen = ({open, handleClose, actions}:Props) => {
                     <Button onClick={handleClose}>Cancelar</Button>
                     <Button
                         variant='contained' 
-                        startIcon={<AddIcon/>} 
+                        startIcon={initialValues ? <EditIcon/> : <AddIcon/>} 
                         // onClick={handleOpenAddModal}
                         type='submit'
                     >
-                        Agregar
+                        {initialValues ? 'Editar' : 'Agregar'}
                     </Button>
                 </footer>
             </form>

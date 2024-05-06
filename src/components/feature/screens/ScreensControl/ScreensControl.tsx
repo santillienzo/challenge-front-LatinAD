@@ -65,7 +65,7 @@ const ScreensControl = () => {
     //Configuramos los props de la paginación
     const paginationProps:PaginationProps = {
         color: 'primary',
-        count: 10,
+        count: 5,
         variant: 'outlined',
         shape: "rounded",
         onChange: handlePage,

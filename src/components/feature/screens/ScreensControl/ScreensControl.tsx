@@ -10,6 +10,8 @@ import { defaultPageSize as pageSize } from '@lib/config'
 import AddIcon from '@mui/icons-material/Add';
 import AddScreen from '../AddScreen/AddScreen'
 
+const INITIAL_PAGE = 1
+
 const ScreensControl = () => {
     const {getScreens, loading, addScreen} = useScreen()
     //State que controla la visualización del modal 'agregar'
@@ -17,7 +19,7 @@ const ScreensControl = () => {
     //State donde se almacena las pantallas
     const [screens, setScreens] = useState<Screen[]>([])
     //State que almacena la página actual del listado
-    const [page, setPage] = useState<number>(1)
+    const [page, setPage] = useState<number>(INITIAL_PAGE)
     //State donde se almacena los parámetros que usaremos para buscar en la bd
     const [queryParams, setQueryParams] = useState<QueryParams>({
         pageSize,
@@ -39,7 +41,7 @@ const ScreensControl = () => {
     //Al enviar el filtro se ejecturá esta función.
     //useCallback para no crear la función en cada renderizado.  
     const handleFilterSubmit = useCallback((values: QueryParams) => {
-        setPage(1)
+        setPage(INITIAL_PAGE)
         setQueryParams(values)
     }, [])
 

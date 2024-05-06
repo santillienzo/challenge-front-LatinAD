@@ -45,6 +45,23 @@ const useScreen = () => {
         }
     }, [token])
 
+    //Obtenemos una pantalla en específico enviando el id de la pantalla a la query
+    const deleteScreen = useCallback(async (id: number, callback: (response:Screen)=> void)=>{
+        setLoading(true)
+        try {
+            const res = await screenService.deleteScreen({id, token})
+            if (res) {
+                callback(res)
+            }
+            
+        } catch (error:any) {
+            console.error(error)
+            setError(error.message)
+        } finally{
+            setLoading(false)
+        }
+    }, [token])
+
     //Esta función creará una nueva pantalla en la base de datos e imapactará en la interfaz
     const addScreen = async (newScreen: Screen, callback: (screen:Screen)=> void)=>{
         setLoading(true)
@@ -64,7 +81,7 @@ const useScreen = () => {
         }
     }
 
-    return {getScreens, getOneScreen, addScreen, loading, error}
+    return {getScreens, getOneScreen, deleteScreen, addScreen, loading, error}
 }
 
 export default useScreen

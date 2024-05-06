@@ -12,10 +12,27 @@ const useScreen = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     //Obtenemos las pantallas enviando parámetros a la query
-    const getScreens = useCallback(async (params:QueryParams, callback: (data:ScreenListResponse)=> void) => {
+    const getScreens = useCallback(async (params:QueryParams, callback: (response:ScreenListResponse)=> void) => {
         setLoading(true)
         try {
             const res = await screenService.fetchScreens({params, token})
+            if (res) {
+                callback(res)
+            }
+            
+        } catch (error:any) {
+            console.error(error)
+            setError(error.message)
+        } finally{
+            setLoading(false)
+        }
+    }, [token])
+
+    //Obtenemos una pantalla en específico enviando el id de la pantalla a la query
+    const getOneScreen = useCallback(async (id: number, callback: (response:Screen)=> void)=>{
+        setLoading(true)
+        try {
+            const res = await screenService.fetchOneScreens({id, token})
             if (res) {
                 callback(res)
             }
@@ -47,7 +64,7 @@ const useScreen = () => {
         }
     }
 
-    return {getScreens, loading, error, addScreen}
+    return {getScreens, getOneScreen, addScreen, loading, error}
 }
 
 export default useScreen

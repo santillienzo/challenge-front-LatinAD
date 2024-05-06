@@ -39,6 +39,33 @@ const fetchScreens = async ({params, token}:Options): Promise<ScreenListResponse
     return data
 }
 
+//Obtendremos todas las pantallas de la bd
+const fetchOneScreens = async ({id, token}:{id:number, token:string}): Promise<Screen>=>{
+    const url = new URL(`${uri}/display/${id}`)
+
+    const res = await fetch(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            //Envío de user token
+            'Authorization': `Bearer ${token}`
+        },
+    })
+    
+    if (!res.ok) {
+        if (res.status === 401) {
+            throw new Error('El usuario o la contraseña son incorrectas. Intentalo de nuevo.');
+        }else if(res.status === 500) {
+            throw new Error('Error de servidor. Intentalo de nuevo más tarde.');
+        } else{
+            throw new Error('Hubo un error. Intentalo de nuevo más tarde.');
+        }
+    }
+
+    const data:Screen = await res.json()
+
+    return data
+}
+
 const createScreen = async (screen:Screen, token:string):Promise<Screen>=>{
     const {price_per_day, resolution_height, resolution_width} = screen
 
@@ -83,5 +110,6 @@ const createScreen = async (screen:Screen, token:string):Promise<Screen>=>{
 //Export service
 export const screenService = {
     fetchScreens,
+    fetchOneScreens,
     createScreen
 }

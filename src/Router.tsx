@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import HomeView from '@components/views/HomeView/HomeView';
+import DetailScreenView from '@components/views/DetailScreenView/DetailScreenView';
 
 /*
   Definimos un router con el objeto createBrowserRouter de react-router-dom. 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomeView/>,
+      },
+      {
+        path: "/screen/:id",
+        element: <DetailScreenView/>
       }
     ]
   },

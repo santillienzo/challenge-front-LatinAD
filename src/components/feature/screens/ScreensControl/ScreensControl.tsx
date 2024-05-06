@@ -8,7 +8,7 @@ import ScreenFilter from '../ScreensFilter/ScreenFilter'
 import { calculateOffset } from '@lib/utils.number'
 import { defaultPageSize as pageSize } from '@lib/config'
 import AddIcon from '@mui/icons-material/Add';
-import AddScreen from '../AddScreen/AddScreen'
+import AddScreen from '../AddScreenModal/AddScreenModal'
 
 const INITIAL_PAGE = 1
 

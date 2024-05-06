@@ -101,7 +101,7 @@ const ScreensControl = () => {
                 <ListScreens screens={screens} loading={loading} handleDelete={handleDelete}/>
                 <Pagination {...paginationProps}/>
             </div>
-            <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} actions={{add: handleAddScreen}}/>
+            <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} action={handleAddScreen}/>
         </>
     )
 }

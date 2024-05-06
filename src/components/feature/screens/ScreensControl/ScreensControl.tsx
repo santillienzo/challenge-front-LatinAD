@@ -13,7 +13,7 @@ import AddScreen from '../AddScreenModal/AddScreenModal'
 const INITIAL_PAGE = 1
 
 const ScreensControl = () => {
-    const {getScreens, loading, addScreen, deleteScreen} = useScreen()
+    const {getScreens, loading, addScreen} = useScreen()
     //State que controla la visualización del modal 'agregar'
     const [isAddOpen, setIsAddOpen] = useState(false)
     //State donde se almacena las pantallas
@@ -54,16 +54,6 @@ const ScreensControl = () => {
         })
     }
 
-    //Obtenemos el id del item y elimnamos
-    const handleDelete = (id:string)=>{
-        const parseId = Number(id)
-        deleteScreen(parseId, ()=>{
-            const filterScreens = screens.filter(screen=> screen.id !== id)
-
-            setScreens(filterScreens)
-        })
-    }
-
     //Ejecutamos este efecto cuando se carga el módulo
     useEffect(() => {
         //Obtenemos las pantallas enviando parámetros a la query
@@ -100,7 +90,7 @@ const ScreensControl = () => {
                     onSubmit={handleFilterSubmit}
                 />
                 <Pagination {...paginationProps}/>
-                <ListScreens screens={screens} loading={loading} handleDelete={handleDelete}/>
+                <ListScreens screens={screens} loading={loading}/>
                 <Pagination {...paginationProps}/>
             </div>
             <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} action={handleAddScreen}/>

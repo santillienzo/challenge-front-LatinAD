@@ -19,12 +19,13 @@ const Navbar = () => {
     //Control de apertura menú
     const [menuIsOpen, setMenuIsOpen] = useState(false)
 
-    const redirect = (path:string)=>{
-        navigation(path)
-    }
-
+    
     const toggleMenu = ()=> setMenuIsOpen(!menuIsOpen)
     
+    const redirect = (path:string)=>{
+        navigation(path)
+        toggleMenu()
+    }
 
     return (
         <div className={styles.navWrapper}>

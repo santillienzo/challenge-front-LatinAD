@@ -1,3 +1,13 @@
+import TvIcon from '@mui/icons-material/Tv';
+
+export const navLinks = [
+    {
+        path: '/',
+        name: 'Pantallas',
+        icon: TvIcon
+    }
+] 
+
 export const getModalStyle = () => {
     return {
         position: 'absolute',

@@ -7,7 +7,7 @@ interface AuthContextType {
   token: string;
   user: User | null;
   login: (body: AuthBody, callback?: () => void) => Promise<void>;
-  logOut: (callback?: () => void) => void;
+  logout: (callback?: () => void) => void;
   error: string | null,
   loading: boolean
 }
@@ -17,7 +17,7 @@ export const AuthContext = createContext<AuthContextType>({
   token: "",
   user: null,
   login: async () => {},
-  logOut: () => {},
+  logout: () => {},
   error: null,
   loading: false,
 });
@@ -61,7 +61,7 @@ const AuthProvider = ({ children }:Props) => {
   };
 
   //Función encargada de cerrar sesión
-  const logOut = (callback?: ()=> void) => {
+  const logout = (callback?: ()=> void) => {
     //Limpieza de usuario y token
     setUser(null);
     setToken("");
@@ -70,7 +70,7 @@ const AuthProvider = ({ children }:Props) => {
     callback && callback()
   };
 
-  return <AuthContext.Provider value={{ token, user, login, logOut, error, loading }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token, user, login, logout, error, loading }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

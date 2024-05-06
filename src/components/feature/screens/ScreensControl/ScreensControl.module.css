@@ -23,9 +23,6 @@
 }
 
 @media screen and (min-width: 768px) {
-    .screensControlContainer{
-        width: 768px;
-    }
 
     .titleSpan{
         display: block;

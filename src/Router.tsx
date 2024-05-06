@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import HomeView from '@components/views/HomeView/HomeView';
 import DetailScreenView from '@components/views/DetailScreenView/DetailScreenView';
+import Navbar from '@components/layout/Navbar/Navbar';
 
 /*
   Definimos un router con el objeto createBrowserRouter de react-router-dom. 
@@ -18,11 +19,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomeView/>,
-      },
-      {
-        path: "/screen/:id",
-        element: <DetailScreenView/>
+        element: <Navbar/>,
+        children: [
+          {
+            path: "/",
+            element: <HomeView/>,
+          },
+          {
+            path: "/screen/:id",
+            element: <DetailScreenView/>
+          }
+        ]
       }
     ]
   },

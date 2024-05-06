@@ -1,0 +1,14 @@
+.navWrapper{
+    display: flex;
+}
+.content{
+    flex-grow: 1;
+}
+.logoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+.toolbar .title{
+    flex: 1
+}

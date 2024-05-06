@@ -1,16 +1,17 @@
 import { Typography } from '@mui/material'
 import styles from './EmptyDataAdvice.module.css'
+import { ReactNode } from 'react'
 
 const DEFAULT_TEXT = "No se encontraron datos. Intentelo de nuevo más tarde."
 
 type Props = {
-    text?:string
+    children?:ReactNode
 }
 
-const EmptyDataAdvice = ({text=DEFAULT_TEXT}:Props) => {
+const EmptyDataAdvice = ({children=DEFAULT_TEXT}:Props) => {
   return (
     <div className={styles.adviceWrapper}>
-      <Typography variant='overline' fontSize={14}>{text}</Typography>
+      <Typography variant='overline' fontSize={14}>{children}</Typography>
     </div>
   )
 }

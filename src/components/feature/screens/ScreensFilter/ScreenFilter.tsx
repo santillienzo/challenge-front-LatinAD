@@ -2,7 +2,7 @@ import { Alert, Button, Chip, Collapse, Paper, TextField, Typography } from '@mu
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import styles from './ScreenFilter.module.css'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -24,6 +24,8 @@ const ScreenFilter = ({pageSize = 10,onSubmit}:Props) => {
     })
     //State que almacena el mensaje de advertencia
     const [warning, setWarning] = useState<string | null>(null)
+    //Guardamos la referencia de la busqueda anterior
+    const previousFilter = useRef(filterValues)
     
     //Función encargada de cambiar el estado de apertura del filtro
     const toggleFilterOpen = ()=> setFilterOpen(!filterOpen)
@@ -40,6 +42,8 @@ const ScreenFilter = ({pageSize = 10,onSubmit}:Props) => {
     const handleSubmit = (e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         let type: ScreenType | undefined | null
+        //Si los valores por los que se quiere filtrar son iguales a los que ya se filtraron no se ejecutará la consulta
+        if (filterValues === previousFilter.current) return
 
         //Validamos los tipos de pantalla selccionados y enviamos un valor acorde a la query
         if (filterValues.outdoor && filterValues.indoor) {
@@ -66,6 +70,9 @@ const ScreenFilter = ({pageSize = 10,onSubmit}:Props) => {
             name: filterValues.name,
             type
         }
+
+        //Guardamos los datos del filtro para validar en la siguiente consulta
+        previousFilter.current = filterValues
 
         if (!queryValues.type) {
             delete queryValues.type

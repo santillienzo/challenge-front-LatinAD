@@ -8,11 +8,10 @@ import TableDataSkeleton from '@components/common/TableDataSkeleton/TableDataSke
 type Props = {
     screens: Screen[],
     loading?: boolean,
-    handleDelete: (id:string)=> void
 }
 
 //Render list of screens
-const ListScreens = ({screens, loading, handleDelete}:Props) => {
+const ListScreens = ({screens, loading}:Props) => {
     return (
         <Paper square className={style.listScreensWrapper}>
             {
@@ -22,7 +21,7 @@ const ListScreens = ({screens, loading, handleDelete}:Props) => {
                     <List className={style.listScreens} component="ul">
                         {
                             screens.map((screen) => {
-                                return <ScreenItem key={screen.id} screen={screen} onDelete={handleDelete}/>
+                                return <ScreenItem key={screen.id} screen={screen}/>
                             })
                         }
                     </List>

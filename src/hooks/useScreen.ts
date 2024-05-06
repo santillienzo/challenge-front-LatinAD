@@ -18,11 +18,13 @@ const useScreen = () => {
             const res = await screenService.fetchScreens({params, token})
             if (res) {
                 callback(res)
+                return res
             }
             
         } catch (error:any) {
             console.error(error)
             setError(error.message)
+            throw Error(error.message)
         } finally{
             setLoading(false)
         }
@@ -35,11 +37,13 @@ const useScreen = () => {
             const res = await screenService.fetchOneScreens({id, token})
             if (res) {
                 callback(res)
+                return res
             }
             
         } catch (error:any) {
             console.error(error)
             setError(error.message)
+            throw Error(error.message)
         } finally{
             setLoading(false)
         }
@@ -52,11 +56,13 @@ const useScreen = () => {
             const res = await screenService.deleteScreen({id, token})
             if (res) {
                 callback(res)
+                return res
             }
             
         } catch (error:any) {
             console.error(error)
             setError(error.message)
+            throw Error(error.message)
         } finally{
             setLoading(false)
         }
@@ -72,10 +78,12 @@ const useScreen = () => {
 
             if (res) {
                 callback(res)
+                return res
             }
         } catch (error:any) {
             console.error(error)
             setError(error.message)
+            throw Error(error.message)
         } finally{
             setLoading(false)
         }

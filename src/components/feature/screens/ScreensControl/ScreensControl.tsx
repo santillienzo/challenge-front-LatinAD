@@ -9,11 +9,12 @@ import { calculateOffset } from '@lib/utils.number'
 import { defaultPageSize as pageSize } from '@lib/config'
 import AddIcon from '@mui/icons-material/Add';
 import AddScreen from '../AddScreenModal/AddScreenModal'
+import { toast } from 'sonner'
 
 const INITIAL_PAGE = 1
 
 const ScreensControl = () => {
-    const {getScreens, loading, addScreen, deleteScreen} = useScreen()
+    const {getScreens, loading, addScreen} = useScreen()
     //State que controla la visualización del modal 'agregar'
     const [isAddOpen, setIsAddOpen] = useState(false)
     //State donde se almacena las pantallas
@@ -31,11 +32,13 @@ const ScreensControl = () => {
 
     //Actualizamos la página y guardamos los valores en los estados correspondientes
     const handlePage = (event: React.ChangeEvent<unknown>, value: number) =>{
-        setPage(value)
-        setQueryParams((prev) => ({
-            ...prev,
-            offset: calculateOffset(pageSize, value)
-        }))
+        if (event) {
+            setPage(value)
+            setQueryParams((prev) => ({
+                ...prev,
+                offset: calculateOffset(pageSize, value)
+            }))
+        }
     } 
 
     //Al enviar el filtro se ejecturá esta función.
@@ -47,18 +50,22 @@ const ScreensControl = () => {
 
     //Cargamos una nueva pantalla en array
     const handleAddScreen = (newScreen: Screen)=>{
-        addScreen(newScreen, (response:Screen)=>{
+        const promise = addScreen(newScreen, (response:Screen)=>{
             setScreens((prev) => [response, ...prev])
+            setPage(INITIAL_PAGE)
+            setQueryParams((prev) => ({
+                ...prev,
+                offset: calculateOffset(pageSize, INITIAL_PAGE)
+            }))
         })
-    }
 
-    //Obtenemos el id del item y elimnamos
-    const handleDelete = (id:string)=>{
-        const parseId = Number(id)
-        deleteScreen(parseId, ()=>{
-            const filterScreens = screens.filter(screen=> screen.id !== id)
-
-            setScreens(filterScreens)
+        //Enviamos la promesa a través del objeto toast para recibir un feedback del estado de nuestra petición
+        toast.promise(promise, {
+            loading: 'Agregando...',
+            success: () => {
+                return `Pantalla agregada correctamente`;
+            },
+            error: (error) => error,
         })
     }
 
@@ -73,7 +80,7 @@ const ScreensControl = () => {
     //Configuramos los props de la paginación
     const paginationProps:PaginationProps = {
         color: 'primary',
-        count: 10,
+        count: 5,
         variant: 'outlined',
         shape: "rounded",
         onChange: handlePage,
@@ -98,7 +105,7 @@ const ScreensControl = () => {
                     onSubmit={handleFilterSubmit}
                 />
                 <Pagination {...paginationProps}/>
-                <ListScreens screens={screens} loading={loading} handleDelete={handleDelete}/>
+                <ListScreens screens={screens} loading={loading}/>
                 <Pagination {...paginationProps}/>
             </div>
             <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} action={handleAddScreen}/>

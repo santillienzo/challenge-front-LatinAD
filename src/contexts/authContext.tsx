@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useState } from "react";
 import { authService } from "@services/auth";
 import { AuthBody, User } from "../types/user";
+import Cookies from 'js-cookie'
 
 // Definimos los tipos para los datos manejados en el contexto
 interface AuthContextType {
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }:Props) => {
   //State donde se guardan los datos del usuario (email y name)
   const [user, setUser] = useState<User | null>(null);
   //State donde se almacena el token
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState(Cookies.get('token') || "");
   //State donde se almacenará el error en caso de haber uno
   const [error, setError] = useState<string | null>(null)
   //Controlamos el loading del componente
@@ -48,7 +49,8 @@ const AuthProvider = ({ children }:Props) => {
         setUser(res);
         //Se guarda el token en el state y en el local storage
         setToken(res.token);
-        localStorage.setItem("token", res.token);
+        // localStorage.setItem("token", res.token);
+        Cookies.set('token', res.token)
       }
 
       //Si existe el callback se ejecutará
@@ -65,7 +67,7 @@ const AuthProvider = ({ children }:Props) => {
     //Limpieza de usuario y token
     setUser(null);
     setToken("");
-    localStorage.removeItem("token");
+    Cookies.remove('token')
     //Si existe el callback se ejecutará
     callback && callback()
   };

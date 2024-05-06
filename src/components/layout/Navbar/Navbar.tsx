@@ -1,22 +1,30 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import styles from './Navbar.module.css'
-import { AppBar, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material'
+import { AppBar, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, useMediaQuery } from '@mui/material'
 import { navLinks } from '@lib/utils.misc'
 import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '@assets/logo.svg'
 import { useAuth } from '@hooks/useAuth';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useState } from 'react';
 
 const drawerWidth = 240
 
 const Navbar = () => {
+    const desktop = useMediaQuery('(min-width:768px)');
     //Utilizamos el hook de react-router
     const navigation = useNavigate()
     //Utilizamos nuestro hook para cerrar sessión
     const {logout} = useAuth()
+    //Control de apertura menú
+    const [menuIsOpen, setMenuIsOpen] = useState(false)
 
     const redirect = (path:string)=>{
         navigation(path)
     }
+
+    const toggleMenu = ()=> setMenuIsOpen(!menuIsOpen)
+    
 
     return (
         <div className={styles.navWrapper}>
@@ -24,7 +32,7 @@ const Navbar = () => {
             <AppBar
                 position="fixed"
                 sx={{ 
-                    width: `calc(100% - ${drawerWidth}px)`, 
+                    width: desktop ? `calc(100% - ${drawerWidth}px)` : '100%', 
                     ml: `${drawerWidth}px`,
                     borderBottom: '1px solid #ddd'
                 }}
@@ -32,6 +40,12 @@ const Navbar = () => {
                 elevation={0}
             >
                 <Toolbar className={styles.toolbar}>
+                    {
+                        !desktop &&
+                            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={toggleMenu}>
+                                <MenuIcon />
+                            </IconButton>
+                    }
                     <h2 className={styles.title}>
                         Administración
                     </h2>
@@ -44,16 +58,17 @@ const Navbar = () => {
             </AppBar>
             <Drawer
                 sx={{
-                    width: drawerWidth,
+                    width: desktop ? drawerWidth : '70%',
                     flexShrink: 0,
                         '& .MuiDrawer-paper': {
-                            width: drawerWidth,
+                            width: desktop ? drawerWidth : '70%',
                             boxSizing: 'border-box',
                     },
                 }}
-                variant="permanent"
+                variant={desktop ? "permanent" : "temporary"}
                 anchor="left"
-
+                open={menuIsOpen}
+                onClose={toggleMenu}
             >
                 <Toolbar className={styles.logoContainer}>
                     <img src={logo} alt="Logo LatinAD" />

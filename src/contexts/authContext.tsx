@@ -50,7 +50,7 @@ const AuthProvider = ({ children }:Props) => {
         //Se guarda el token en el state y en el local storage
         setToken(res.token);
         // localStorage.setItem("token", res.token);
-        Cookies.set('token', res.token)
+        Cookies.set('token', res.token, {expires: 7})
       }
 
       //Si existe el callback se ejecutará

@@ -26,7 +26,7 @@ const fetchScreens = async ({params, token}:Options): Promise<ScreenListResponse
     
     if (!res.ok) {
         if (res.status === 401) {
-            throw new Error('El usuario o la contraseña son incorrectas. Intentalo de nuevo.');
+            throw new Error('No tienes permisos para ejecutar esta solicitud.');
         }else if(res.status === 500) {
             throw new Error('Error de servidor. Intentalo de nuevo más tarde.');
         } else{

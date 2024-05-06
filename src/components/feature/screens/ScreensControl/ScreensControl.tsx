@@ -51,6 +51,12 @@ const ScreensControl = () => {
     const handleAddScreen = (newScreen: Screen)=>{
         addScreen(newScreen, (response:Screen)=>{
             setScreens((prev) => [response, ...prev])
+            setPage(INITIAL_PAGE)
+            setQueryParams((prev) => ({
+                ...prev,
+                offset: calculateOffset(pageSize, INITIAL_PAGE)
+            }))
+
         })
     }
 

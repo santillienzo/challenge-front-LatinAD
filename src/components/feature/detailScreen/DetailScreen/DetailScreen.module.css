@@ -65,7 +65,13 @@
         flex-direction: row;
     }
     .imgContainer{
-        min-width: 550px;
-        max-width: 550px;
+        min-width: 250px;
+        max-width: 250px;
+    }
+    @media screen and (min-width: 990px) {
+        .imgContainer{
+            min-width: 500px;
+            max-width: 500px;
+        }
     }
 }

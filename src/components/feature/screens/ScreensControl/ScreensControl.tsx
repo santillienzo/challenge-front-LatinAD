@@ -2,7 +2,7 @@ import useScreen from '@hooks/useScreen'
 import { useCallback, useEffect, useState } from 'react'
 import { QueryParams, Screen, ScreenListResponse } from 'types/screen'
 import styles from './ScreensControl.module.css'
-import { Button, Pagination, PaginationProps } from '@mui/material'
+import { Button, Pagination } from '@mui/material'
 import ListScreens from '../ListScreens/ListScreens'
 import ScreenFilter from '../ScreensFilter/ScreenFilter'
 import { calculateOffset, calculateTotalPages } from '@lib/utils.number'
@@ -80,16 +80,6 @@ const ScreensControl = () => {
         })
     }, [getScreens, queryParams])
 
-    //Configuramos los props de la paginación
-    const paginationProps:PaginationProps = {
-        color: 'primary',
-        count: calculateTotalPages(totalScreens, pageSize),
-        variant: 'outlined',
-        shape: "rounded",
-        onChange: handlePage,
-        page
-    }
-
     return (
         <>
             <div className={styles.screensControlContainer}>
@@ -107,9 +97,15 @@ const ScreensControl = () => {
                     pageSize={pageSize}
                     onSubmit={handleFilterSubmit}
                 />
-                <Pagination {...paginationProps}/>
                 <ListScreens screens={screens} loading={loading} addModal={handleOpenAddModal}/>
-                <Pagination {...paginationProps}/>
+                <Pagination 
+                    color='primary'
+                    count={calculateTotalPages(totalScreens, pageSize)}
+                    variant='outlined'
+                    shape="rounded"
+                    onChange={handlePage}
+                    page={page}
+                />
             </div>
             <AddScreen open={isAddOpen} handleClose={handleCloseAddModal} action={handleAddScreen}/>
         </>

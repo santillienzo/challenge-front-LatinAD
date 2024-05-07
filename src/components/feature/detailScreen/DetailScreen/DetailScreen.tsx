@@ -25,6 +25,9 @@ const DetailScreen = ({screen, setScreen}:Props) => {
     //State que controla la visualización del modal 'editar'
     const [isEditOpen, setIsEditOpen] = useState(false)
     const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+    //State que controla el display del nombre de la pantalla
+    const [hideTitle, setHideTitle] = useState(true)
+    const [hideDescription, setHideDescription] = useState(true)
 
     //Funciones para controlar la apertura del modal de edición
     const handleCloseEditModal = ()=> setIsEditOpen(false)
@@ -33,6 +36,9 @@ const DetailScreen = ({screen, setScreen}:Props) => {
     //Funciones para controlar la apertura del modal de eliminación
     const handleCloseDeleteModal = ()=> setIsDeleteOpen(false)
     const handleOpenDeleteModal = ()=> setIsDeleteOpen(true)
+
+    const toggleTitle = ()=> setHideTitle(!hideTitle)
+    const toggleDescription = ()=> setHideDescription(!hideDescription)
 
     //Obtenemos la pantalla actualizada y utilizamos nuestro hook
     const handleEdit = (updatedScreen: Screen)=>{
@@ -76,10 +82,24 @@ const DetailScreen = ({screen, setScreen}:Props) => {
                         <img src={screen.picture_url} alt={screen.name} />
                     </div>
                     <div>
-                        <h3 className={styles.screenTitle}>
+                        <h3 
+                            style={{
+                                display: hideTitle ? '-webkit-box' : 'block'
+                            }}
+                            onClick={toggleTitle}
+                            className={styles.screenTitle}
+                        >
                             {screen.name}
                         </h3>
-                        <p className={styles.description}>{screen.description}</p>
+                        <p 
+                            style={{
+                                display: hideDescription ? '-webkit-box' : 'block'
+                            }}
+                            onClick={toggleDescription}
+                            className={styles.description}
+                        >
+                            {screen.description}
+                        </p>
                         <div className={styles.detailItemContainer}>
                             <div className={styles.detailItem}>
                                 <Typography variant='overline'>Tipo</Typography>

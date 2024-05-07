@@ -2,7 +2,7 @@
     padding: 35px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center
 }
 
 .detailContentBox{
@@ -10,4 +10,9 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+
+.link{
+    color: var(--secondary-color);
+    text-decoration: underline;
 }

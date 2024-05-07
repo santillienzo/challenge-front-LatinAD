@@ -75,7 +75,7 @@ const Navbar = ({children}:Props) => {
                         open={openAccountMenu}
                         onClose={handleCloseAccountMenu}
                     >
-                        <MenuItem disabled>
+                        <MenuItem onClick={()=> navigation('/profile')}>
                             <ListItemIcon>
                                 <AccountCircleOutlinedIcon/>
                             </ListItemIcon>

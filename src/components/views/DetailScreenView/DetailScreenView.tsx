@@ -25,7 +25,7 @@ const DetailScreenView = () => {
 
 
   return (
-    <main className={styles.detailScreenContainer}>
+    <div className={styles.detailScreenContainer}>
       <section className={styles.detailContentBox}>
         <h1>Detalle</h1>
         {
@@ -35,7 +35,7 @@ const DetailScreenView = () => {
           : <EmptyDataAdvice>No se encontró una pantalla. <Link to="/" className={styles.link}>Ir al inicio.</Link></EmptyDataAdvice>
         }
       </section>
-    </main>
+    </div>
   )
 }
 

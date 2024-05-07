@@ -7,3 +7,12 @@ export const calculateOffset = (pageSize:number, page:number)=>{
 export const calculateTotalPages = (totalScreens:number, pageSize:number)=>{
     return totalScreens === 0 ? 1 :Math.ceil(totalScreens / pageSize)
 }
+
+//Formatear moneda
+export const formatARS = (value:number)=>{
+    return new Intl.NumberFormat('es-AR', {
+        style: 'currency',
+        currency: 'ARS',
+        minimumFractionDigits: 0
+    }).format(value)
+}

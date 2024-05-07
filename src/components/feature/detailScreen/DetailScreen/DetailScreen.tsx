@@ -11,6 +11,7 @@ import { Dispatch, useState } from 'react';
 import AddScreen from '@components/feature/screens/AddScreenModal/AddScreenModal';
 import { toast } from 'sonner';
 import DeleteModal from '../DeleteModal/DeleteModal';
+import { formatARS } from '@lib/utils.number';
 
 type Props = {
     screen:Screen,
@@ -18,6 +19,7 @@ type Props = {
 }
 
 const DetailScreen = ({screen, setScreen}:Props) => {
+    const {id, name, description, price_per_day, resolution_height, resolution_width, type, picture_url} = screen
     //screen hook
     const {deleteScreen, updateScreen} = useScreen()
     //Instanciamos hook de react-router
@@ -43,7 +45,7 @@ const DetailScreen = ({screen, setScreen}:Props) => {
     //Obtenemos la pantalla actualizada y utilizamos nuestro hook
     const handleEdit = (updatedScreen: Screen)=>{
         //Guardamos nuestra promesa en una variable para simplificar la lectura
-        const promise = updateScreen({ id: screen.id,...updatedScreen}, (response)=>{
+        const promise = updateScreen({ id,...updatedScreen}, (response)=>{
             setScreen(response)
         })
 
@@ -59,7 +61,7 @@ const DetailScreen = ({screen, setScreen}:Props) => {
     }
 
     const handleDelete = ()=>{
-        const promise = deleteScreen(Number(screen.id))
+        const promise = deleteScreen(Number(id))
         
         toast.promise(promise, {
             loading: 'Eliminando...',
@@ -79,7 +81,7 @@ const DetailScreen = ({screen, setScreen}:Props) => {
             <Paper className={styles.detailContainer}>
                 <div className={styles.infoContainer}>
                     <div className={styles.imgContainer}>
-                        <img src={screen.picture_url} alt={screen.name} />
+                        <img src={picture_url} alt={name} />
                     </div>
                     <div>
                         <h3 
@@ -89,7 +91,7 @@ const DetailScreen = ({screen, setScreen}:Props) => {
                             onClick={toggleTitle}
                             className={styles.screenTitle}
                         >
-                            {screen.name}
+                            {name}
                         </h3>
                         <p 
                             style={{
@@ -98,26 +100,26 @@ const DetailScreen = ({screen, setScreen}:Props) => {
                             onClick={toggleDescription}
                             className={styles.description}
                         >
-                            {screen.description}
+                            {description}
                         </p>
                         <div className={styles.detailItemContainer}>
                             <div className={styles.detailItem}>
                                 <Typography variant='overline'>Tipo</Typography>
-                                <Chip color='info' label={formatScreenType(screen.type)}/>
+                                <Chip color='info' label={formatScreenType(type)}/>
                             </div>
                             <div className={styles.detailItem}>
                                 <Typography variant='overline'>Resolución</Typography>
                                 <div>
-                                    <Chip variant='outlined' icon={<TrendingFlatIcon/>} label={screen.resolution_width}/>
+                                    <Chip variant='outlined' icon={<TrendingFlatIcon/>} label={resolution_width}/>
                                     &nbsp;
                                     x 
                                     &nbsp;
-                                    <Chip variant='outlined' icon={<HeightIcon/>} label={screen.resolution_height}/>
+                                    <Chip variant='outlined' icon={<HeightIcon/>} label={resolution_height}/>
                                 </div>
                             </div>
                             <div className={styles.detailItem}>
                                 <Typography variant='overline'>Precio por día</Typography>
-                                <Chip icon={<AttachMoneyIcon fontSize='small'/>} label={screen.price_per_day}/>
+                                <Chip icon={<AttachMoneyIcon fontSize='small'/>} label={formatARS(Number(price_per_day))}/>
                             </div>
                         </div>
                     </div>

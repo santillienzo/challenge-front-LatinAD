@@ -94,7 +94,6 @@ const AddScreen = ({open, handleClose, action, initialValues}:Props) => {
                             size="small"
                             placeholder="1920"
                             label="Ancho"
-                            type="number"
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -112,7 +111,6 @@ const AddScreen = ({open, handleClose, action, initialValues}:Props) => {
                             size="small"
                             placeholder="1080"
                             label="Alto"
-                            type="number"
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -131,7 +129,6 @@ const AddScreen = ({open, handleClose, action, initialValues}:Props) => {
                         fullWidth   
                         placeholder="1500"
                         label="Precio por día"
-                        type="number"
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">

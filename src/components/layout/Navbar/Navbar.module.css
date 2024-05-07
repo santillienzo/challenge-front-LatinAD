@@ -1,5 +1,7 @@
 .navWrapper{
     display: flex;
+    max-width: 100vw;
+    overflow: hidden;
 }
 .content{
     flex-grow: 1;

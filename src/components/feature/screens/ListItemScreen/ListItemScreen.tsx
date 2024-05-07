@@ -1,6 +1,6 @@
 import { Screen } from 'types/screen'
 import styles from './ListItemScreen.module.css'
-import { Button, Divider, ListItem, ListItemText } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 import { formatScreenType } from '@lib/utils.string';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,12 +20,19 @@ const ScreenItem = ({screen,}:Props) => {
 
   return (
     <>
-      <ListItem className={styles.screenContainer}>
-        <ListItemText primary={name} secondary={formatScreenType(type)}/>
+      <div className={styles.itemContainer}>
+        <div className={styles.screenNameWrapper}>
+          <Typography className={styles.screenName}>
+            {name}
+          </Typography>
+          <Typography variant='subtitle2' className={styles.screenType}>
+            {formatScreenType(type)}
+          </Typography>
+        </div>
         <div className={styles.actionButtons}>
           <Button onClick={redirect} className={styles.btn}>Ver más</Button>
         </div>
-      </ListItem>
+      </div>
       <Divider/>
     </>
   )

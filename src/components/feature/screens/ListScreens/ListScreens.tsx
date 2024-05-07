@@ -1,5 +1,5 @@
 import ScreenItem from '../ListItemScreen/ListItemScreen'
-import { List, Paper } from '@mui/material'
+import { Paper, Stack } from '@mui/material'
 import style from './ListScreens.module.css'
 import { Screen } from 'types/screen'
 import EmptyDataAdvice from '@components/common/EmptyDataAdvice/EmptyDataAdvice'
@@ -28,13 +28,13 @@ const ListScreens = ({screens, loading, addModal}:Props) => {
                         No se encontraron datos.
                     </EmptyDataAdvice>
                 ):(
-                    <List className={style.listScreens} component="ul">
+                    <Stack className={style.listScreens}>
                         {
                             screens.map((screen) => {
                                 return <ScreenItem key={screen.id} screen={screen}/>
                             })
                         }
-                    </List>
+                    </Stack>
                 )
             }
         </Paper>

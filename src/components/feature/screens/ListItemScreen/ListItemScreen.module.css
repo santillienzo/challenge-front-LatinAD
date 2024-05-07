@@ -1,8 +1,54 @@
+.itemContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    max-width: 100%;
+}
+
+.screenName{
+    width: 200px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; 
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.screenType{
+    font-weight: 400 !important;
+    color: #00000099
+
+}
+
 .actionButtons{
     display: flex;
     gap: 5px;
 }
 
+
 .btn{
     white-space: nowrap !important;
 }
+
+@media screen and (min-width: 500px) {
+    .screenName{
+        width: 300px;
+    }
+
+    @media screen and (min-width: 700px) {
+        .screenName{
+            width: 500px;
+        }
+
+        @media screen and (min-width: 9000px) {
+            .screenName{
+                width: 600px;
+            }
+        }
+    }
+
+}
+
+
+

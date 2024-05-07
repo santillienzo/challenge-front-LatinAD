@@ -4,12 +4,19 @@
     justify-content: space-between;
     padding: 8px 16px;
     max-width: 100%;
+    overflow: hidden;
+}
+
+.screenNameWrapper{
+    flex: 1;
+    max-width: 70%;
 }
 
 .screenName{
-    width: 200px;
+    max-width: 100%;
     display: -webkit-box;
     white-space: break-spaces;
+    word-break: break-all;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
@@ -33,25 +40,6 @@
 
 .btn{
     white-space: nowrap !important;
-}
-
-@media screen and (min-width: 500px) {
-    .screenName{
-        width: 300px;
-    }
-
-    @media screen and (min-width: 700px) {
-        .screenName{
-            width: 500px;
-        }
-
-        @media screen and (min-width: 9000px) {
-            .screenName{
-                width: 600px;
-            }
-        }
-    }
-
 }
 
 

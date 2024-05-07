@@ -1,16 +1,22 @@
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './Navbar.module.css'
-import { AppBar, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, useMediaQuery } from '@mui/material'
+import { AppBar, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, useMediaQuery } from '@mui/material'
 import { navLinks } from '@lib/utils.misc'
 import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '@assets/logo.svg'
 import { useAuth } from '@hooks/useAuth';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Fragment, useState } from 'react';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { Fragment, ReactNode, useState } from 'react';
 
 const drawerWidth = 240
 
-const Navbar = () => {
+type Props = {
+    children: ReactNode
+}
+
+const Navbar = ({children}:Props) => {
     const desktop = useMediaQuery('(min-width:768px)');
     //Utilizamos el hook de react-router
     const navigation = useNavigate()
@@ -18,8 +24,17 @@ const Navbar = () => {
     const {logout} = useAuth()
     //Control de apertura menú
     const [menuIsOpen, setMenuIsOpen] = useState(false)
+    //control del menú perfil
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const openAccountMenu = Boolean(anchorEl);
+    const handleOpenAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleCloseAccountMenu = () => {
+        setAnchorEl(null);
+    };
 
-    
+    //Alternamos la visualización del menú
     const toggleMenu = ()=> setMenuIsOpen(!menuIsOpen)
     
     const redirect = (path:string)=>{
@@ -44,17 +59,35 @@ const Navbar = () => {
                     {
                         !desktop &&
                             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={toggleMenu}>
-                                <MenuIcon />
+                                <MenuIcon/>
                             </IconButton>
                     }
                     <h2 className={styles.title}>
                         Administración
                     </h2>
                     <div>
-                        <IconButton onClick={()=> logout()}>
-                            <LogoutIcon/>
+                        <IconButton onClick={handleOpenAccountMenu}>
+                            <PersonOutlineOutlinedIcon/>
                         </IconButton>
                     </div>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={openAccountMenu}
+                        onClose={handleCloseAccountMenu}
+                    >
+                        <MenuItem disabled>
+                            <ListItemIcon>
+                                <AccountCircleOutlinedIcon/>
+                            </ListItemIcon>
+                            <ListItemText>Perfil</ListItemText>
+                        </MenuItem>
+                        <MenuItem onClick={()=> logout()}>
+                            <ListItemIcon>
+                                <LogoutIcon/>
+                            </ListItemIcon>
+                            <ListItemText>Cerrar sesión</ListItemText>
+                        </MenuItem>
+                    </Menu>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -75,13 +108,19 @@ const Navbar = () => {
                     <img src={logo} alt="Logo LatinAD" />
                 </Toolbar>
                 <Divider />
-                <List>
+                <List className={styles.navItemsContainer}>
                     {navLinks.map((section, i) => (
                         <Fragment key={i}>
                             {
                                 section.map((link)=>(
-                                    <ListItem key={link.path} disabled={link.disabled} disablePadding onClick={()=> redirect(link.path)}>
-                                        <ListItemButton>
+                                    <ListItem 
+                                        key={link.path} 
+                                        disablePadding
+                                    >
+                                        <ListItemButton
+                                            disabled={link.disabled} 
+                                            onClick={()=> redirect(link.path)}
+                                        >
                                             <ListItemIcon >
                                                 <link.icon/>
                                             </ListItemIcon>
@@ -97,7 +136,7 @@ const Navbar = () => {
             </Drawer>
             <div className={styles.content}>
                 <Toolbar/>
-                <Outlet/>
+                {children}
             </div>
         </div>
     )

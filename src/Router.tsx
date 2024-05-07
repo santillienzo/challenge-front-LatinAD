@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import HomeView from '@components/views/HomeView/HomeView';
 import DetailScreenView from '@components/views/DetailScreenView/DetailScreenView';
-import Navbar from '@components/layout/Navbar/Navbar';
+import Layout from '@components/layout/Layout';
 
 /*
   Definimos un router con el objeto createBrowserRouter de react-router-dom. 
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Navbar/>,
+        element: <Layout/>,
         children: [
           {
             path: "/",

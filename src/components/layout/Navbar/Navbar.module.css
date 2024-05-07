@@ -3,6 +3,9 @@
     max-width: 100vw;
     overflow: hidden;
 }
+.navItemsContainer{
+    overflow-y: auto;
+}
 .content{
     flex-grow: 1;
     overflow: hidden;

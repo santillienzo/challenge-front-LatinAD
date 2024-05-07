@@ -68,6 +68,7 @@ const AuthProvider = ({ children }:Props) => {
     setUser(null);
     setToken("");
     Cookies.remove('token')
+    setLoading(false)
     //Si existe el callback se ejecutará
     callback && callback()
   };

@@ -72,7 +72,7 @@ export const useAddScreenForm = ({initialValues}:Args)=>{
         }
 
         if (name === 'pricePerDay' || name === 'resolutionHeight' || name === 'resolutionWidth') {
-            const isPositive = /^\d*\d+$/.test(value) && Number(value) >= 0;
+            const isPositive = /^\d*\d+$/.test(value) && Number(value) > 0;
             //Si el número es positivo: 
             if (!isPositive) {
                 setInputErrors((prev) => ({

@@ -6,7 +6,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '@assets/logo.svg'
 import { useAuth } from '@hooks/useAuth';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 const drawerWidth = 240
 
@@ -76,15 +76,22 @@ const Navbar = () => {
                 </Toolbar>
                 <Divider />
                 <List>
-                    {navLinks.map((link) => (
-                        <ListItem key={link.path} disablePadding onClick={()=> redirect(link.path)}>
-                            <ListItemButton>
-                                <ListItemIcon >
-                                    <link.icon/>
-                                </ListItemIcon>
-                                <ListItemText primary={link.name} />
-                            </ListItemButton>
-                        </ListItem>
+                    {navLinks.map((section, i) => (
+                        <Fragment key={i}>
+                            {
+                                section.map((link)=>(
+                                    <ListItem key={link.path} disabled={link.disabled} disablePadding onClick={()=> redirect(link.path)}>
+                                        <ListItemButton>
+                                            <ListItemIcon >
+                                                <link.icon/>
+                                            </ListItemIcon>
+                                            <ListItemText primary={link.name} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))
+                            }
+                            <Divider/>
+                        </Fragment>
                     ))}
                 </List>
             </Drawer>

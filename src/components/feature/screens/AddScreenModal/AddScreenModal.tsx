@@ -45,7 +45,8 @@ const AddScreen = ({open, handleClose, action, initialValues}:Props) => {
                 type
             })
             handleClose()
-            resetValues()
+            
+            !initialValues && resetValues()
         })
     }
 
@@ -55,7 +56,6 @@ const AddScreen = ({open, handleClose, action, initialValues}:Props) => {
         onClose={handleClose}
         aria-labelledby="add-screen-modal"
         aria-describedby="Modal para agregar pantalla"
-        keepMounted
     >
         <Box className={styles.modal} sx={{ ...getModalStyle()}}>
             <h2>{initialValues ? 'Editar' : 'Agregar'} pantalla</h2>

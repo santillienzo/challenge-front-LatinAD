@@ -1,5 +1,7 @@
 # CHALLENGE TÉCNICO DE LATINDAD
 
+Deploy: https://challenge-front-latindad.netlify.app/
+
 ## Descripción
 Este proyecto contiene las siguientes funcionalidades:
   1) Sistema de control de acceso (Login).

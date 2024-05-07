@@ -9,10 +9,14 @@
 .screenName{
     width: 200px;
     display: -webkit-box;
+    white-space: break-spaces;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1; 
-    cursor: pointer;
+    -webkit-line-clamp: 1;
     overflow: hidden;
+}
+
+.screenName:hover{
+    text-decoration: underline;
 }
 
 .screenType{

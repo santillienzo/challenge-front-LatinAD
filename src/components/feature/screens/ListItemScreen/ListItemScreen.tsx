@@ -2,7 +2,7 @@ import { Screen } from 'types/screen'
 import styles from './ListItemScreen.module.css'
 import { Button, Divider, Typography } from '@mui/material'
 import { formatScreenType } from '@lib/utils.string';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type Props = {
   screen:Screen,
@@ -22,9 +22,9 @@ const ScreenItem = ({screen,}:Props) => {
     <>
       <div className={styles.itemContainer}>
         <div className={styles.screenNameWrapper}>
-          <Typography className={styles.screenName}>
+          <Link to={`/screen/${id}`} className={styles.screenName}>
             {name}
-          </Typography>
+          </Link>
           <Typography variant='subtitle2' className={styles.screenType}>
             {formatScreenType(type)}
           </Typography>

@@ -5,6 +5,7 @@
 }
 .content{
     flex-grow: 1;
+    overflow: hidden;
 }
 .logoContainer{
     display: flex;

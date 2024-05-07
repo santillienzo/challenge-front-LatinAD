@@ -1,5 +1,7 @@
 .detailContainer{
     padding: 18px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .infoContainer{
@@ -20,10 +22,23 @@
 
 .screenTitle{
     font-size: 24px;
+    word-break: break-word;
+    white-space: break-spaces;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .description{
+    margin-top: 10px;
     margin-bottom: 20px;
+    word-break: break-word;
+    white-space: break-spaces;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .detailItemContainer{

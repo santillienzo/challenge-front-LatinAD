@@ -71,13 +71,10 @@ export const useAddScreenForm = ({initialValues}:Args)=>{
             clearError(name)
         }
 
-        console.log("Antes de la validación")
         if (name === 'pricePerDay' || name === 'resolutionHeight' || name === 'resolutionWidth') {
-            console.log("Entra en primera validación")
             const isPositive = /^\d*\d+$/.test(value) && Number(value) >= 0;
             //Si el número es positivo: 
             if (!isPositive) {
-                console.log("No es positivo")
                 setInputErrors((prev) => ({
                     ...prev,
                     [name.toString()]: "El valor tiene que ser un número entero positivo."

@@ -3,7 +3,6 @@ import { Screen } from 'types/screen'
 import HeightIcon from '@mui/icons-material/Height';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import styles from "./DetailScreen.module.css";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { formatScreenType } from '@lib/utils.string';
 import useScreen from '@hooks/useScreen';
 import { useNavigate } from 'react-router-dom';
@@ -119,7 +118,7 @@ const DetailScreen = ({screen, setScreen}:Props) => {
                             </div>
                             <div className={styles.detailItem}>
                                 <Typography variant='overline'>Precio por día</Typography>
-                                <Chip icon={<AttachMoneyIcon fontSize='small'/>} label={formatARS(Number(price_per_day))}/>
+                                <Chip label={formatARS(Number(price_per_day))}/>
                             </div>
                         </div>
                     </div>

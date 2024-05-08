@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Fragment, ReactNode, useState } from 'react';
+import { getFirstname } from '@lib/utils.string';
 
 const drawerWidth = 240
 
@@ -21,7 +22,7 @@ const Navbar = ({children}:Props) => {
     //Utilizamos el hook de react-router
     const navigation = useNavigate()
     //Utilizamos nuestro hook para cerrar sessión
-    const {logout} = useAuth()
+    const {logout, user} = useAuth()
     //Control de apertura menú
     const [menuIsOpen, setMenuIsOpen] = useState(false)
     //control del menú perfil
@@ -65,6 +66,10 @@ const Navbar = ({children}:Props) => {
                     <h2 className={styles.title}>
                         Administración
                     </h2>
+                    {
+                        desktop && user && <h3 className={styles.welcomeText}>Hola, {getFirstname(user.name)}!</h3>
+                    }
+                    
                     <div>
                         <IconButton onClick={handleOpenAccountMenu}>
                             <PersonOutlineOutlinedIcon/>

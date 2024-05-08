@@ -1,7 +1,7 @@
-import { AuthBody, User } from "types/user"
+import { AuthBody, UserResponse } from "types/user"
 import {uri} from "@lib/config";
 
-const login = async (body:AuthBody): Promise<User>=>{
+const login = async (body:AuthBody): Promise<UserResponse>=>{
     const res = await fetch(`${uri}/login`, {
         method: 'POST',
         headers: {
@@ -19,7 +19,7 @@ const login = async (body:AuthBody): Promise<User>=>{
             throw new Error('Hubo un error. Intentalo de nuevo más tarde.');
         }
     }
-    const data:User = await res.json()
+    const data:UserResponse = await res.json()
 
     return data
 }

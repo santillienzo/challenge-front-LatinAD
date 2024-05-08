@@ -27,9 +27,14 @@ type Props = {
   children: ReactNode;
 }
 
+const storedUser = localStorage.getItem('user');
+
 const AuthProvider = ({ children }:Props) => {
   //State donde se guardan los datos del usuario (email y name)
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(
+    storedUser ? JSON.parse(storedUser) as User : null || null
+  );
+  
   //State donde se almacena el token
   const [token, setToken] = useState(Cookies.get('token') || "");
   //State donde se almacenará el error en caso de haber uno
@@ -46,10 +51,19 @@ const AuthProvider = ({ children }:Props) => {
       //Si existe el token:
       if (res.token) {
         //Se guardan los datos del usuario
-        setUser(res);
+        setUser({
+          email: res.email,
+          name: res.name
+        });
         //Se guarda el token en el state y en el local storage
         setToken(res.token);
-        // localStorage.setItem("token", res.token);
+
+        //Se guarda el usuario en el local storage
+        localStorage.setItem("user", JSON.stringify({
+          email: res.email,
+          name: res.name
+        }));
+        //Se guarda el token en una cookie
         Cookies.set('token', res.token, {expires: 7})
       }
 

@@ -7,6 +7,7 @@ import {
 import HomeView from '@components/views/HomeView/HomeView';
 import DetailScreenView from '@components/views/DetailScreenView/DetailScreenView';
 import Layout from '@components/layout/Layout';
+import ProfileView from '@components/views/ProfileView/ProfileView';
 
 /*
   Definimos un router con el objeto createBrowserRouter de react-router-dom. 
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
           {
             path: "/screen/:id",
             element: <DetailScreenView/>
+          },
+          {
+            path: "/profile",
+            element: <ProfileView/>
           }
         ]
       }
